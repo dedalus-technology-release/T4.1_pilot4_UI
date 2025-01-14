@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { TSV } from "../api/models"
+import { SPMV, TSV } from "../api/models"
 
 import { getSPMV, getTsv } from "../api/comfort"
 
@@ -18,9 +18,9 @@ export const useTsv = () => {
 }
 
 export const useSPMV = () => {
-  const query = useQuery<TSV[]>({
+  const query = useQuery<SPMV[]>({
     queryKey: ["spmv"],
-    queryFn: getSPMV,
+    queryFn: getSPMV,  
     placeholderData: [],
     staleTime: 1000 * 60 * 15, //keep data fresh for 15 min
     gcTime: 1000 * 60 * 15, //cache is kept for 15 minutes

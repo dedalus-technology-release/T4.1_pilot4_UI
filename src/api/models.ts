@@ -4,7 +4,7 @@ export interface TSV{
 }
 export interface SPMV{
   date: string,
-  tsv: number
+  sPMV: number
 }
 export interface Consumption{
   date: string,

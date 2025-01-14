@@ -29,7 +29,7 @@ const AppNavbar = () => {
           </Nav>
           <Nav>
             <Nav.Link onClick={handleLogout}>
-              <TbLogout className="logout-icon" size={25} />
+              <TbLogout className="logout-icon" size={20} />
               <span className="logout-text">Log Out</span>
             </Nav.Link>
           </Nav>
