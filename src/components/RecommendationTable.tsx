@@ -30,35 +30,32 @@ const RecommendationTable = () => {
     },
   ];
   return (
-    <div>
-      <h2>Recomendation</h2>
-      <Table bordered hover>
-        <thead className="sticky-top">
-          <tr>
-            <th>Condition</th>
-            <th>Setting</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recommendations.map((recommendation) =>
-            recommendation.settings.map((setting, settingIndex) => (
-              <>
-                <tr>
-                  {settingIndex == 0 && (
-                    <td rowSpan={3}>
-                      <strong>{recommendation.condition}</strong>
-                    </td>
-                  )}
-                  <td>{setting.setting}</td>
-                  <td>{setting.value}</td>
-                </tr>
-              </>
-            ))
-          )}
-        </tbody>
-      </Table>
-    </div>
+    // <div>
+    <Table bordered hover>
+      <thead className="sticky-top">
+        <tr>
+          <th>Condition</th>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {recommendations.map((recommendation) =>
+          recommendation.settings.map((setting, settingIndex) => (
+            <tr key={settingIndex}>
+              {settingIndex == 0 && (
+                <td rowSpan={3}>
+                  <strong>{recommendation.condition}</strong>
+                </td>
+              )}
+              <td>{setting.setting}</td>
+              <td>{setting.value}</td>
+            </tr>
+          ))
+        )}
+      </tbody>
+    </Table>
+    // </div>
   );
 };
 

@@ -7,6 +7,7 @@ import { useConsumption } from "../hooks/useConsumption";
 import LineChart from "../components/LineChart";
 import { Table } from "react-bootstrap";
 import RecommendationTable from "../components/RecommendationTable";
+import DataDisplayCard from "../components/cards/DataDisplayCard";
 
 export const Dashboard = () => {
   const {
@@ -80,18 +81,34 @@ export const Dashboard = () => {
             <h4>DASHBOARD</h4>
           </Col>
         </Row>
-        <Row>
+        <Row data-masonry='{"percentPosition": true }'>
           <Col lg={6}>
-            <LineChart inputChartData={tsvChartData} dataLength={1} />
+            <DataDisplayCard
+              title="Thermal sensation vote"
+              classCard="mb-3"
+              classCardBody="p-4">
+              <LineChart inputChartData={tsvChartData} dataLength={1} />
+            </DataDisplayCard>
+
+            <DataDisplayCard title="SPMV" classCard="mb-3" classCardBody="p-4">
+              <LineChart inputChartData={spmvChartData} dataLength={1} />
+            </DataDisplayCard>
           </Col>
+
           <Col lg={6}>
-            <LineChart inputChartData={spmvChartData} dataLength={1} />
-          </Col>
-          <Col lg={6}>
-            <LineChart inputChartData={consumptionChartData} dataLength={1} />
-          </Col>
-          <Col lg={6}>
-            <RecommendationTable />
+            <DataDisplayCard
+              title="Recommendation"
+              classCard="mb-3"
+              classCardBody="p-4">
+              <RecommendationTable />
+              {/* <p>test</p> */}
+            </DataDisplayCard>
+            <DataDisplayCard
+              title="Consumption"
+              classCard="mb-3"
+              classCardBody="p-4">
+              <LineChart inputChartData={consumptionChartData} dataLength={1} />
+            </DataDisplayCard>
           </Col>
         </Row>
       </Container>
