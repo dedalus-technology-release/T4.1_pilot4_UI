@@ -22,9 +22,19 @@ const AppNavbar = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          {/* <Nav >
             <Nav.Link as={NavLink} to="/dashboard">
               Dashboard
+            </Nav.Link>
+          </Nav> */}
+          <Nav >
+            <Nav.Link as={NavLink} to="/tito-garzoni-house">
+              Tito Garzoni House
+            </Nav.Link>
+          </Nav>
+          <Nav className="me-auto">
+            <Nav.Link as={NavLink} to="/maddalena-house">
+              Maddalena House
             </Nav.Link>
           </Nav>
           <Nav>

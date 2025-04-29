@@ -1,4 +1,4 @@
-import { API_URL } from "../utils/Constant";
+import { API_URL, API_URL_PROD } from "../utils/Constant";
 import api from "./axiosConfig";
 import { TSV, SPMV } from "./models";
 
@@ -15,11 +15,11 @@ export const getTsv =  async (): Promise<TSV[]> =>{
  }
 }
 
-export const getSPMV =  async (): Promise<SPMV[]> =>{
+export const getSPMV =  async (building: string, apartment: string): Promise<SPMV[]> =>{
   try {
-    const response = await api.get(`${API_URL}/spmv`);
+    const response = await api.get(`${API_URL_PROD}/sPMV/${building}/${apartment}`);
+
     const data: SPMV[] = response.data
-    console.log(response)
     return data
  } catch (error: any) {
     console.log("error", error)

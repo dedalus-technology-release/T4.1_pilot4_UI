@@ -1,10 +1,10 @@
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { Chart, Filler, Tooltip, Legend } from "chart.js";
 import { memo } from "react";
 import "chart.js/auto";
 
 Chart.register(Filler, Tooltip, Legend);
-interface LineChartProps {
+interface BarChartProps {
   inputChartData?: {
     labels?: string[];
     datasets: {
@@ -19,7 +19,7 @@ interface LineChartProps {
   dataLength?: number;
 }
 
-const LineChart = memo(({ inputChartData, dataLength }: LineChartProps) => {
+const BarChart = memo(({ inputChartData, dataLength }: BarChartProps) => {
   const placeholderData = {
     labels: ["No Data"],
     datasets: [
@@ -41,10 +41,10 @@ const LineChart = memo(({ inputChartData, dataLength }: LineChartProps) => {
 
   return (
     <div style={{ height: "310px" }}>
-      <Line data={chartData} height={200} options={options} />
+      <Bar data={chartData} height={200} options={options} />
     </div>
   );
 });
 
-LineChart.displayName = "LineChart";
-export default LineChart;
+BarChart.displayName = "BarChart";
+export default BarChart;

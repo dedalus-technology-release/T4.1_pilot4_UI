@@ -4,12 +4,17 @@ import Row from "react-bootstrap/Row";
 
 import { useSPMV, useTsv } from "../hooks/useComfort";
 import { useConsumption } from "../hooks/useConsumption";
-import LineChart from "../components/LineChart";
+import LineChart from "../components/charts/LineChart";
 import { Table } from "react-bootstrap";
 import RecommendationTable from "../components/RecommendationTable";
 import DataDisplayCard from "../components/cards/DataDisplayCard";
+import BarChart from "../components/charts/BarChart";
+import { CustomSelect } from "../components/CustomSelect";
+import { BUILDING, TITO_GARZONI_HOUSE } from "../utils/buildings";
+import { useState } from "react";
 
-export const Dashboard = () => {
+export const TitoGarzoniBuildingPage = () => {
+  const [selectedApartment, setSelectedApartment] = useState(null);
   const {
     data: tsvData,
     isPending: tsvPending,
@@ -20,7 +25,7 @@ export const Dashboard = () => {
     data: spmvData,
     isPending: spmvPending,
     isFetching: spmvFetching,
-  } = useSPMV();
+  } = useSPMV(TITO_GARZONI_HOUSE, selectedApartment);
 
   const {
     data: consumptionData,
@@ -41,18 +46,18 @@ export const Dashboard = () => {
         label: `TSV`,
         data: tsvData.map((record) => record.tsv),
         fill: true,
-        backgroundColor: "rgba(54,162,235,0.5)",
-        borderColor: "rgba(54,162,235,1)",
+        backgroundColor: "rgb(255, 190, 0)",
+        borderColor: "rgb(255, 190, 0)",
       },
     ],
   };
 
   const spmvChartData = spmvData && {
-    labels: spmvData.map((record) => record.date),
+    labels: spmvData?.map((record) => record.time),
     datasets: [
       {
         label: `SPMV`,
-        data: spmvData.map((record) => record.sPMV),
+        data: spmvData?.map((record) => record.forecasted_sPMV.toFixed(2)),
         fill: true,
         backgroundColor: "rgba(54,162,235,0.5)",
         borderColor: "rgba(54,162,235,1)",
@@ -73,6 +78,11 @@ export const Dashboard = () => {
     ],
   };
 
+  const apartmentOptions = BUILDING["tito_garzoni_house"].map((apartment) => ({
+    value: apartment,
+    label: apartment,
+  }));
+
   return (
     <>
       <Container className="py-2">
@@ -80,18 +90,50 @@ export const Dashboard = () => {
           <Col>
             <h4>DASHBOARD</h4>
           </Col>
+
+          <Row>
+            <Col>
+              <CustomSelect
+                options={apartmentOptions}
+                value={{
+                  value: selectedApartment ?? "Select apartment",
+                  label: selectedApartment ?? "Select apartment",
+                }}
+                onChange={(e: Record<string, string>) =>
+                  setSelectedApartment(e.value || null)
+                }
+                placeholderText="Select apartment"
+              />
+            </Col>
+          </Row>
         </Row>
+
         <Row data-masonry='{"percentPosition": true }'>
           <Col lg={6}>
-            <DataDisplayCard
-              title="Thermal sensation vote"
+            {/* <DataDisplayCard
+              title="Thermal Sensation"
               classCard="mb-3"
               classCardBody="p-4">
-              <LineChart inputChartData={tsvChartData} dataLength={1} />
-            </DataDisplayCard>
+              <BarChart inputChartData={tsvChartData} dataLength={1} />
+            </DataDisplayCard> */}
 
-            <DataDisplayCard title="SPMV" classCard="mb-3" classCardBody="p-4">
-              <LineChart inputChartData={spmvChartData} dataLength={1} />
+            <DataDisplayCard
+              title="sPMV Prediction"
+              classCard="mb-3"
+              classCardBody="p-4"
+            >
+              <LineChart inputChartData={spmvChartData} dataLength={1}  />
+            </DataDisplayCard>
+            <DataDisplayCard
+              title="Consumption"
+              classCard="mb-3"
+              classCardBody="p-4"
+            >
+              <LineChart
+                inputChartData={consumptionChartData}
+                dataLength={1}
+                unit="kWh"
+              />
             </DataDisplayCard>
           </Col>
 
@@ -99,15 +141,10 @@ export const Dashboard = () => {
             <DataDisplayCard
               title="Recommendation"
               classCard="mb-3"
-              classCardBody="p-4">
+              classCardBody="p-4"
+            >
               <RecommendationTable />
               {/* <p>test</p> */}
-            </DataDisplayCard>
-            <DataDisplayCard
-              title="Consumption"
-              classCard="mb-3"
-              classCardBody="p-4">
-              <LineChart inputChartData={consumptionChartData} dataLength={1} />
             </DataDisplayCard>
           </Col>
         </Row>

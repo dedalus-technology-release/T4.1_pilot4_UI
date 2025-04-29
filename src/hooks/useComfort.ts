@@ -17,13 +17,14 @@ export const useTsv = () => {
   return query
 }
 
-export const useSPMV = () => {
+export const useSPMV = (building: string, apartment: string) => {
   const query = useQuery<SPMV[]>({
-    queryKey: ["spmv"],
-    queryFn: getSPMV,  
+    enabled:  !!apartment,
+    queryKey: ["spmv", building, apartment],
+    queryFn: ()=>getSPMV(building, apartment),  
     placeholderData: [],
-    staleTime: 1000 * 60 * 15, //keep data fresh for 15 min
-    gcTime: 1000 * 60 * 15, //cache is kept for 15 minutes
+    // staleTime: 1000 * 60 * 15, //keep data fresh for 15 min
+    // gcTime: 1000 * 60 * 15, //cache is kept for 15 minutes
     refetchOnMount: false,
     retry: false,
   })

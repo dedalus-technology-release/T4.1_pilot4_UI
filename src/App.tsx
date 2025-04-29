@@ -12,7 +12,10 @@ import {
 } from "@tanstack/react-query";
 
 import AppNavbar from "./components/AppNavbar";
-import { Dashboard } from "./pages/Dashboard";
+// import { Dashboard } from "./pages/TitoGarzoniBuildingPage";
+import { MaddalenaBuildingPage } from "./pages/MaddalenaBuildingPage";
+import { TitoGarzoniBuildingPage } from "./pages/TitoGarzoniBuildingPage";
+
 
 function App() {
   const queryClient = new QueryClient({
@@ -28,8 +31,10 @@ function App() {
         <Router>
           <AppNavbar />
           <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" />}></Route>
-            <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route path="/" element={<Navigate to="/tito-garzoni-house" />}></Route>
+            {/* <Route path="/tito-garzoni-house" element={<TitoGarzoniBuildingPage />}></Route> */}
+            <Route path="/tito-garzoni-house" element={<TitoGarzoniBuildingPage />}></Route>
+            <Route path="/maddalena-house" element={<MaddalenaBuildingPage />}></Route>
           </Routes>
         </Router>
       </QueryClientProvider>
