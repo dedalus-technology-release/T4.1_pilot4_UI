@@ -7,10 +7,8 @@ export const getTsv = async (): Promise<TSV[]> => {
   try {
     const response = await api.get(`${API_URL}/tsv`);
     const data: TSV[] = response.data;
-    console.log(response);
     return data;
   } catch (error: any) {
-    console.log("error", error);
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
     throw new Error(errorMessage);
   }
@@ -28,7 +26,6 @@ export const getSPMV = async (
     const data: SPMV[] = response.data;
     return data;
   } catch (error: any) {
-    console.log("error", error);
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
     throw new Error(errorMessage);
   }
@@ -43,13 +40,17 @@ export const getRecommendation = async (
     const response = await api.get(`${API_URL}/recommendation_${buildingStr}`);
 
     const data = response.data[apartment];
+    if (!data) {
+      throw new Error(`Could not fetch recommendation for ${building} - ${apartment}`);
+    }
+    //change model format
     const cleanedData =
       data?.map((item: any) => normalizeRecommendationData(item)) ?? [];
 
     return cleanedData;
   } catch (error: any) {
-    console.log("error", error);
-    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    const errorMessage =
+      error.response?.data?.detail || error || "Failed to fetch data";
     throw new Error(errorMessage);
   }
 };

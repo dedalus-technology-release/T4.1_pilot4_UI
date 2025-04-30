@@ -12,7 +12,7 @@ const solutionCondition: Record<string, string> = {
 };
 
 const RecommendationTable = ({ data }: RecommendationTableProps) => {
-  const dataWithCondition = data.map((recomendation: Recommendation) => {
+  const dataWithCondition = data?.map((recomendation: Recommendation) => {
     return {
       // ...recomendation,
       condition: solutionCondition?.[recomendation?.solution],
@@ -58,7 +58,11 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
             ))
           )
         ) : (
-          <p>Select apartment to see recommendations</p>
+          <tr>
+            <td colSpan={3} className="text-center">
+              No data available
+            </td>
+          </tr>
         )}
       </tbody>
     </Table>
