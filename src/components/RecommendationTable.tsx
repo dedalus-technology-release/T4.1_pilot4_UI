@@ -43,8 +43,8 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         </tr>
       </thead>
       <tbody>
-        {dataWithCondition.length > 0 ? (
-          dataWithCondition.map((recommendation) =>
+        {dataWithCondition?.length > 0 ? (
+          dataWithCondition?.map((recommendation) =>
             recommendation.settings.map((setting, settingIndex) => (
               <tr key={settingIndex}>
                 {settingIndex == 0 && (

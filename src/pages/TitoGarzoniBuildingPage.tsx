@@ -16,11 +16,11 @@ import CircularProgress from "../components/CircularProgress";
 
 export const TitoGarzoniBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState(null);
-  const {
-    data: tsvData,
-    isPending: tsvPending,
-    isFetching: tsvFetching,
-  } = useTsv();
+  // const {
+  //   data: tsvData,
+  //   isPending: tsvPending,
+  //   isFetching: tsvFetching,
+  // } = useTsv();
 
   const {
     data: spmvData,
@@ -93,7 +93,7 @@ export const TitoGarzoniBuildingPage = () => {
   }));
 
   useEffect(() => {
-    setSelectedApartment(apartmentOptions?.[0].value || "")
+    setSelectedApartment(apartmentOptions?.[0].value || "");
   }, []);
   return (
     <>
