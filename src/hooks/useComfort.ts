@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
 
-import { SPMV, TSV } from "../api/models"
+import { SPMV, TSV } from "../api/models";
 
-import { getSPMV, getTsv } from "../api/comfort"
+import { getRecommendation, getSPMV, getTsv } from "../api/comfort";
 
 export const useTsv = () => {
   const query = useQuery<TSV[]>({
@@ -13,20 +13,31 @@ export const useTsv = () => {
     gcTime: 1000 * 60 * 15, //cache is kept for 15 minutes
     refetchOnMount: false,
     retry: false,
-  })
-  return query
-}
+  });
+  return query;
+};
 
 export const useSPMV = (building: string, apartment: string) => {
   const query = useQuery<SPMV[]>({
-    enabled:  !!apartment,
+    enabled: !!apartment,
     queryKey: ["spmv", building, apartment],
-    queryFn: ()=>getSPMV(building, apartment),  
+    queryFn: () => getSPMV(building, apartment),
     placeholderData: [],
     // staleTime: 1000 * 60 * 15, //keep data fresh for 15 min
     // gcTime: 1000 * 60 * 15, //cache is kept for 15 minutes
     refetchOnMount: false,
     retry: false,
-  })
-  return query
-}
+  });
+  return query;
+};
+
+export const useRecommendation = (building: string, apartment: string) => {
+  const query = useQuery<any>({
+    enabled: !!apartment,
+    queryKey: ["recommendation", building, apartment],
+    queryFn: () => getRecommendation(building, apartment),
+    placeholderData: [],
+  });
+
+  return query;
+};

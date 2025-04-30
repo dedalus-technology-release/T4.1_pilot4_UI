@@ -27,15 +27,112 @@
     { "date": "2024-01-09T19:00:00", "tsv": 3 },
     { "date": "2024-01-09T20:00:00", "tsv": 3 }
   ],
-  "spmv": [
-    { "date": "2024-01-09T12:00:00", "sPMV": 1.08 },
-    { "date": "2024-01-09T13:00:00", "sPMV": 2.5 },
-    { "date": "2024-01-09T14:00:00", "sPMV": 3.0 },
-    { "date": "2024-01-09T15:00:00", "sPMV": 2.0 },
-    { "date": "2024-01-09T16:00:00", "sPMV": 1 },
-    { "date": "2024-01-09T17:00:00", "sPMV": -0.29 },
-    { "date": "2024-01-09T18:00:00", "sPMV": -0.3 },
-    { "date": "2024-01-09T19:00:00", "sPMV": -0.3 },
-    { "date": "2024-01-09T20:00:00", "sPMV": -3 }
-  ]
+  "recommendation_CASA_TITO_GARZONI": {
+    "E150": [
+      {
+        "Solution": "S1",
+        "Comfort (%)": 100.0,
+        "Energy (Wh)": 2232.11,
+        "Avg Temp (°C)": 21.81,
+        "Avg RH (%)": 51.62,
+        "Energy Savings (%)": 77.25
+      },
+      {
+        "Solution": "S2",
+        "Comfort (%)": 98.33,
+        "Energy (Wh)": 2387.57,
+        "Avg Temp (°C)": 20.61,
+        "Avg RH (%)": 53.74,
+        "Energy Savings (%)": 75.66
+      },
+      {
+        "Solution": "S3",
+        "Comfort (%)": 95.83,
+        "Energy (Wh)": 2620.77,
+        "Avg Temp (°C)": 18.81,
+        "Avg RH (%)": 56.92,
+        "Energy Savings (%)": 73.28
+      }
+    ],
+    "E149": [
+      {
+        "Solution": "S1",
+        "Comfort (%)": 100.0,
+        "Energy (Wh)": 2232.11,
+        "Avg Temp (°C)": 22.32,
+        "Avg RH (%)": 56.3,
+        "Energy Savings (%)": 78.45
+      },
+      {
+        "Solution": "S2",
+        "Comfort (%)": 98.33,
+        "Energy (Wh)": 2387.57,
+        "Avg Temp (°C)": 24.2,
+        "Avg RH (%)": 53.74,
+        "Energy Savings (%)": 78.3
+      },
+      {
+        "Solution": "S3",
+        "Comfort (%)": 95.83,
+        "Energy (Wh)": 2620.77,
+        "Avg Temp (°C)": 19.25,
+        "Avg RH (%)": 54.3,
+        "Energy Savings (%)": 75.3
+      }
+    ]
+  },
+  "recommendation_MADDALENA_HOUSE": {
+    "E144": [
+      {
+        "Solution": "S1",
+        "Comfort (%)": 100.0,
+        "Energy (Wh)": 2232.11,
+        "Avg Temp (°C)": 21.81,
+        "Avg RH (%)": 51.62,
+        "Energy Savings (%)": 77.25
+      },
+      {
+        "Solution": "S2",
+        "Comfort (%)": 98.33,
+        "Energy (Wh)": 2387.57,
+        "Avg Temp (°C)": 20.61,
+        "Avg RH (%)": 53.74,
+        "Energy Savings (%)": 75.66
+      },
+      {
+        "Solution": "S3",
+        "Comfort (%)": 95.83,
+        "Energy (Wh)": 2620.77,
+        "Avg Temp (°C)": 18.81,
+        "Avg RH (%)": 56.92,
+        "Energy Savings (%)": 73.28
+      }
+    ],
+    "E145": [
+      {
+        "Solution": "S1",
+        "Comfort (%)": 100.0,
+        "Energy (Wh)": 2232.11,
+        "Avg Temp (°C)": 22.32,
+        "Avg RH (%)": 56.3,
+        "Energy Savings (%)": 78.45
+      },
+      {
+        "Solution": "S2",
+        "Comfort (%)": 98.33,
+        "Energy (Wh)": 2387.57,
+        "Avg Temp (°C)": 24.2,
+        "Avg RH (%)": 53.74,
+        "Energy Savings (%)": 78.3
+      },
+      {
+        "Solution": "S3",
+        "Comfort (%)": 95.83,
+        "Energy (Wh)": 2620.77,
+        "Avg Temp (°C)": 19.25,
+        "Avg RH (%)": 54.3,
+        "Energy Savings (%)": 75.3
+      }
+    ]
+  }
 }

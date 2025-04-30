@@ -2,7 +2,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-import { useSPMV, useTsv } from "../hooks/useComfort";
+import { useRecommendation, useSPMV, useTsv } from "../hooks/useComfort";
 import { useConsumption } from "../hooks/useConsumption";
 import LineChart from "../components/charts/LineChart";
 import { Table } from "react-bootstrap";
@@ -32,6 +32,12 @@ export const TitoGarzoniBuildingPage = () => {
     isPending: consumptionPending,
     isFetching: consumptionFetching,
   } = useConsumption();
+
+  const {
+    data: recommendationData,
+    isPending: recommendationPending,
+    isFetching: recommendationFetching,
+  } = useRecommendation(TITO_GARZONI_HOUSE, selectedApartment);
 
   const loadingTsv = tsvPending || tsvFetching;
   const loadingSpmv = spmvPending || spmvFetching;
@@ -122,7 +128,7 @@ export const TitoGarzoniBuildingPage = () => {
               classCard="mb-3"
               classCardBody="p-4"
             >
-              <LineChart inputChartData={spmvChartData} dataLength={1}  />
+              <LineChart inputChartData={spmvChartData} dataLength={1} />
             </DataDisplayCard>
             <DataDisplayCard
               title="Consumption"
@@ -143,7 +149,7 @@ export const TitoGarzoniBuildingPage = () => {
               classCard="mb-3"
               classCardBody="p-4"
             >
-              <RecommendationTable />
+              <RecommendationTable data={recommendationData} />
               {/* <p>test</p> */}
             </DataDisplayCard>
           </Col>
