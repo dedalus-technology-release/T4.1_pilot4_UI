@@ -23,11 +23,11 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         },
         {
           setting: "Relative Humidity",
-          value: `${recomendation.avgHumidity} °C`,
+          value: `${recomendation.avgHumidity} %`,
         },
         {
           setting: "Energy Saving",
-          value: `${recomendation.energySavings} °C`,
+          value: `${recomendation.energySavings} %`,
         },
       ],
     };
@@ -46,9 +46,9 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         {dataWithCondition?.length > 0 ? (
           dataWithCondition?.map((recommendation) =>
             recommendation.settings.map((setting, settingIndex) => (
-              <tr key={settingIndex}>
+              <tr key={settingIndex} className="hoverable-row">
                 {settingIndex == 0 && (
-                  <td rowSpan={3}>
+                  <td rowSpan={3} style={{ maxWidth: "250px" }}>
                     <strong>{recommendation.condition}</strong>
                   </td>
                 )}

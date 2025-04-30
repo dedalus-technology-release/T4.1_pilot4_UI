@@ -133,14 +133,14 @@ export const TitoGarzoniBuildingPage = () => {
             <DataDisplayCard
               title="sPMV Prediction"
               classCard="mb-3"
-              classCardBody="p-4"
+              classCardBody="p-2"
             >
               <LineChart inputChartData={spmvChartData} dataLength={1} />
             </DataDisplayCard>
             <DataDisplayCard
               title="Consumption"
               classCard="mb-3"
-              classCardBody="p-4"
+              classCardBody="p-2"
             >
               <LineChart
                 inputChartData={consumptionChartData}
@@ -154,7 +154,7 @@ export const TitoGarzoniBuildingPage = () => {
             <DataDisplayCard
               title="Recommendation"
               classCard="mb-3"
-              classCardBody="p-4"
+              classCardBody="p-2"
             >
               <RecommendationTable data={recommendationData} />
               {/* <p>test</p> */}
