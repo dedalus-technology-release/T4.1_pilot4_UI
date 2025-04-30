@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -48,18 +48,18 @@ export const TitoGarzoniBuildingPage = () => {
   const isLoading = loadingSpmv || loadingRecommendation;
   // || loadingConsumption loadingTsv ||;
 
-  const tsvChartData = tsvData && {
-    labels: tsvData.map((record) => record.date),
-    datasets: [
-      {
-        label: `TSV`,
-        data: tsvData.map((record) => record.tsv),
-        fill: true,
-        backgroundColor: "rgb(255, 190, 0)",
-        borderColor: "rgb(255, 190, 0)",
-      },
-    ],
-  };
+  // const tsvChartData = tsvData && {
+  //   labels: tsvData.map((record) => record.date),
+  //   datasets: [
+  //     {
+  //       label: `TSV`,
+  //       data: tsvData.map((record) => record.tsv),
+  //       fill: true,
+  //       backgroundColor: "rgb(255, 190, 0)",
+  //       borderColor: "rgb(255, 190, 0)",
+  //     },
+  //   ],
+  // };
 
   const spmvChartData = spmvData && {
     labels: spmvData?.map((record) => record.time),
@@ -92,27 +92,30 @@ export const TitoGarzoniBuildingPage = () => {
     label: apartment,
   }));
 
+  useEffect(() => {
+    setSelectedApartment(apartmentOptions?.[0].value || "")
+  }, []);
   return (
     <>
       <Container className="py-2">
         <Row>
           <Col>
-            <h4>DASHBOARD</h4>
+            <h4>TITO GARZONI</h4>
           </Col>
           <Col>{isLoading && <CircularProgress />}</Col>
 
           <Row>
-            <Col>
+            <Col lg={4} className="pb-2">
               <CustomSelect
                 options={apartmentOptions}
                 value={{
-                  value: selectedApartment ?? "Select apartment",
-                  label: selectedApartment ?? "Select apartment",
+                  value: selectedApartment ?? "",
+                  label: selectedApartment ?? "",
                 }}
                 onChange={(e: Record<string, string>) =>
                   setSelectedApartment(e.value || null)
                 }
-                placeholderText="Select apartment"
+                placeholderText=""
               />
             </Col>
           </Row>
