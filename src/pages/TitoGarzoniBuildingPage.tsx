@@ -1,17 +1,18 @@
+import { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-import { useRecommendation, useSPMV, useTsv } from "../hooks/useComfort";
-import { useConsumption } from "../hooks/useConsumption";
 import LineChart from "../components/charts/LineChart";
-import { Table } from "react-bootstrap";
 import RecommendationTable from "../components/RecommendationTable";
 import DataDisplayCard from "../components/cards/DataDisplayCard";
-import BarChart from "../components/charts/BarChart";
 import { CustomSelect } from "../components/CustomSelect";
+
+import { useConsumption } from "../hooks/useConsumption";
+import { useRecommendation, useSPMV, useTsv } from "../hooks/useComfort";
+
 import { BUILDING, TITO_GARZONI_HOUSE } from "../utils/buildings";
-import { useState } from "react";
+import CircularProgress from "../components/CircularProgress";
 
 export const TitoGarzoniBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState(null);
@@ -39,11 +40,13 @@ export const TitoGarzoniBuildingPage = () => {
     isFetching: recommendationFetching,
   } = useRecommendation(TITO_GARZONI_HOUSE, selectedApartment);
 
-  const loadingTsv = tsvPending || tsvFetching;
+  // const loadingTsv = tsvPending || tsvFetching;
   const loadingSpmv = spmvPending || spmvFetching;
-  const loadingConsumption = consumptionPending || consumptionFetching;
+  const loadingRecommendation = recommendationPending || recommendationFetching;
+  // const loadingConsumption = consumptionPending || consumptionFetching;
 
-  const loading = loadingTsv || loadingSpmv || loadingConsumption;
+  const isLoading = loadingSpmv || loadingRecommendation;
+  // || loadingConsumption loadingTsv ||;
 
   const tsvChartData = tsvData && {
     labels: tsvData.map((record) => record.date),
@@ -96,6 +99,7 @@ export const TitoGarzoniBuildingPage = () => {
           <Col>
             <h4>DASHBOARD</h4>
           </Col>
+          <Col>{isLoading && <CircularProgress />}</Col>
 
           <Row>
             <Col>
