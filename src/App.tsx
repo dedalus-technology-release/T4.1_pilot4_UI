@@ -17,9 +17,10 @@ import { MaddalenaBuildingPage } from "./pages/MaddalenaBuildingPage";
 import { TitoGarzoniBuildingPage } from "./pages/TitoGarzoniBuildingPage";
 import AlertContextProvider from "./context/AlertContext";
 import useAlertToast from "./hooks/useAlertToast";
+import Login from "./pages/Login";
 
 function App() {
-  const {notifyError } = useAlertToast()
+  const { notifyError } = useAlertToast();
   const queryClient = new QueryClient({
     queryCache: new QueryCache({
       onError: (error) => {
@@ -35,10 +36,7 @@ function App() {
           <AlertContextProvider>
             <AppNavbar />
             <Routes>
-              <Route
-                path="/"
-                element={<Navigate to="/tito-garzoni-house" />}
-              ></Route>
+              <Route path="/" element={<Navigate to="/login" />}></Route>
               {/* <Route path="/tito-garzoni-house" element={<TitoGarzoniBuildingPage />}></Route> */}
               <Route
                 path="/tito-garzoni-house"
@@ -48,6 +46,7 @@ function App() {
                 path="/maddalena-house"
                 element={<MaddalenaBuildingPage />}
               ></Route>
+              <Route path="/login" element={<Login />}></Route>
             </Routes>
           </AlertContextProvider>
         </Router>

@@ -23,3 +23,14 @@ export interface Option {
   label: string;
   value: string;
 }
+
+export interface Token{
+  access_token: string,
+  tokenType: string
+}
+
+
+export interface IFormInput {
+  username: string;
+  password: string;
+}

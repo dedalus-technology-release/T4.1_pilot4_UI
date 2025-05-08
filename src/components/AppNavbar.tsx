@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { TbLogout } from "react-icons/tb";
 
 import Navbar from "react-bootstrap/Navbar";
@@ -8,8 +8,13 @@ import Nav from "react-bootstrap/Nav";
 import dedalusIcon from "../assets/DEDALUS-Icon-White.png";
 
 const AppNavbar = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+
   const handleLogout = () => {
-    console.log("Logout");
+    navigate("/login");
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("isAuthenticated", "");
   };
   return (
     <Navbar expand="lg" data-bs-theme="dark" className="p-0 bg-primary">
@@ -20,30 +25,30 @@ const AppNavbar = () => {
             ITALY
           </p>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          {/* <Nav >
-            <Nav.Link as={NavLink} to="/dashboard">
-              Dashboard
-            </Nav.Link>
-          </Nav> */}
-          <Nav >
-            <Nav.Link as={NavLink} to="/tito-garzoni-house">
-              Tito Garzoni House
-            </Nav.Link>
-          </Nav>
-          <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/maddalena-house">
-              Maddalena House
-            </Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav.Link onClick={handleLogout}>
-              <TbLogout className="logout-icon" size={20} />
-              <span className="logout-text">Log Out</span>
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+
+        {isAuthenticated && (
+          <>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav>
+                <Nav.Link as={NavLink} to="/tito-garzoni-house">
+                  Tito Garzoni House
+                </Nav.Link>
+              </Nav>
+              <Nav className="me-auto">
+                <Nav.Link as={NavLink} to="/maddalena-house">
+                  Maddalena House
+                </Nav.Link>
+              </Nav>
+              <Nav>
+                <Nav.Link onClick={handleLogout}>
+                  <TbLogout className="logout-icon" size={20} />
+                  <span className="logout-text">Log Out</span>
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </>
+        )}
       </Container>
     </Navbar>
   );
