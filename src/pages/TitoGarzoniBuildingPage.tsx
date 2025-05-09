@@ -157,10 +157,10 @@ export const TitoGarzoniBuildingPage = () => {
               classCardBody="p-2"
             >
               <RecommendationTable data={recommendationData} />
-              {/* <p>test</p> */}
             </DataDisplayCard>
           </Col>
         </Row>
+
       </Container>
     </>
   );

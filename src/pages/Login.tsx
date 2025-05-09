@@ -2,18 +2,28 @@ import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useLogin } from "../hooks/useLogin";
-import { IFormInput } from "../api/models";
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
 import { useNavigate } from "react-router-dom";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Card from "react-bootstrap/Card";
+import { FaLock } from "react-icons/fa";
+
+import useAlertToast from "../hooks/useAlertToast";
+import { useLogin } from "../hooks/useLogin";
+
+import { IFormInput } from "../api/models";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { notifyError } = useAlertToast();
 
   const loginMutation = useLogin({
     onSuccess: () => {
       navigate("/tito-garzoni-house");
+    },
+    onError: (e: Error) => {
+      console.log("samo test", e);
+      notifyError(e.message);
     },
   });
 
@@ -29,56 +39,73 @@ const Login = () => {
 
   return (
     <>
-      <Container className="p-2">
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-            <Form.Label column sm={2}>
-              Username
-            </Form.Label>
-            <Col sm={10} lg={6}>
-              <Form.Control
-                placeholder="Username"
-                {...register("username", { required: true })}
-                isInvalid={!!errors.username}
-              />
-              {errors.username?.type === "required" && (
-                <Form.Control.Feedback type="invalid">
-                  {" "}
-                  Username is required
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+      <Container
+        // fluid
+        className="d-flex justify-content-center align-items-center  space-between"
+        style={{
+          height: "85vh",
+        }}
+      >
+        <Card className="p-4">
+          <h3 className="text-center">Login</h3>
+          <h3 className="text-center ">
+            <FaLock className="text-warning" />
+          </h3>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formPlaintextEmail"
+            >
+              <Form.Label column sm={12}>
+                Username
+              </Form.Label>
+              <Col sm={12}>
+                <Form.Control
+                  placeholder="Username"
+                  {...register("username", { required: true })}
+                  isInvalid={!!errors.username}
+                />
+                {errors.username?.type === "required" && (
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Username is required
+                  </Form.Control.Feedback>
+                )}
+              </Col>
+            </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formPlaintextPassword"
-          >
-            <Form.Label column sm={2}>
-              Password
-            </Form.Label>
-            <Col sm={10} lg={6}>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                {...register("password", { required: true })}
-                isInvalid={!!errors.password}
-              />
-              {errors.password?.type === "required" && (
-                <Form.Control.Feedback type="invalid">
-                  {" "}
-                  Password is required
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group>
-            <Button variant="outline-warning" type="submit">
-              LOG IN
-            </Button>
-          </Form.Group>
-        </Form>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formPlaintextPassword"
+            >
+              <Form.Label column sm={12}>
+                Password
+              </Form.Label>
+              <Col sm={12} lg={12}>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  {...register("password", { required: true })}
+                  isInvalid={!!errors.password}
+                  className="w-100"
+                />
+                {errors.password?.type === "required" && (
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Password is required
+                  </Form.Control.Feedback>
+                )}
+              </Col>
+            </Form.Group>
+            <Form.Group>
+              <Button variant="outline-warning" type="submit" className="w-100">
+                Login
+              </Button>
+            </Form.Group>
+          </Form>
+        </Card>
       </Container>
     </>
   );

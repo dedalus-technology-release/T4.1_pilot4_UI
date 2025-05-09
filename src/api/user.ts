@@ -12,14 +12,12 @@ export const login = async (credentials: IFormInput): Promise<Token> => {
     const data: Token = response.data;
     const token = data.access_token;
 
-    localStorage.setItem(
-      "accessToken",
-      token
-    );
+    localStorage.setItem("accessToken", token);
     localStorage.setItem("isAuthenticated", "true");
     return data;
   } catch (error: any) {
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    
     throw new Error(errorMessage);
   }
 };
