@@ -10,7 +10,10 @@ export const getTsv = async (): Promise<TSV[]> => {
     return data;
   } catch (error: any) {
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
-    throw new Error(errorMessage);
+    const customError = new Error(errorMessage) as any;
+    customError.status = error.response?.status
+    
+    throw customError;
   }
 };
 
@@ -26,8 +29,12 @@ export const getSPMV = async (
     const data: SPMV[] = response.data;
     return data;
   } catch (error: any) {
+   
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
-    throw new Error(errorMessage);
+    const customError = new Error(errorMessage) as any;
+    customError.status = error.response?.status
+    
+    throw customError;
   }
 };
 
@@ -49,8 +56,10 @@ export const getRecommendation = async (
 
     return cleanedData;
   } catch (error: any) {
-    const errorMessage =
-      error.response?.data?.detail || error || "Failed to fetch data";
-    throw new Error(errorMessage);
+    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    const customError = new Error(errorMessage) as any;
+    customError.status = error.response?.status
+    
+    throw customError;
   }
 };

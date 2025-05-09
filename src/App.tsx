@@ -4,6 +4,7 @@ import {
   Route,
   BrowserRouter as Router,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import {
   QueryCache,
@@ -20,11 +21,17 @@ import useAlertToast from "./hooks/useAlertToast";
 import Login from "./pages/Login";
 
 function App() {
+  // const navigate = useNavigate();
   const { notifyError } = useAlertToast();
   const queryClient = new QueryClient({
     queryCache: new QueryCache({
-      onError: (error) => {
-        console.log("errorrrrrr", error);
+      onError: (error: any) => {
+        if (error.status === 401) {
+          window.location.href = "/login";
+          localStorage.setItem("accessToken", "");
+          localStorage.setItem("isAuthenticated", "");
+        }
+
         notifyError(error.message);
       },
     }),

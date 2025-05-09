@@ -10,8 +10,10 @@ export const getConsumption =  async (): Promise<Consumption[]> =>{
     console.log(response)
     return data
  } catch (error: any) {
-    console.log("error", error)
-    const errorMessage = error.response?.data?.detail || "Failed to fetch data"
-    throw new Error(errorMessage)
+   const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+   const customError = new Error(errorMessage) as any;
+   customError.status = error.response?.status
+   
+   throw customError;
  }
 }
