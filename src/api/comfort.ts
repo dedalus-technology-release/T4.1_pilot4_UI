@@ -43,10 +43,10 @@ export const getRecommendation = async (
   apartment: string
 ): Promise<any> => {
   try {
-    const buildingStr: string = building.split(" ").join("_");
-    const response = await api.get(`${API_URL}/recommendation_${buildingStr}`);
+    const response = await api.get(`${API_URL_PROD}/optimization/${building}/${apartment}`);
 
-    const data = response.data[apartment];
+    const data= response.data;
+
     if (!data) {
       throw new Error(`Could not fetch recommendation for ${building} - ${apartment}`);
     }
