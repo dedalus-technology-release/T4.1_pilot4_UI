@@ -1,14 +1,18 @@
 import Table from "react-bootstrap/Table";
 
 import { Recommendation } from "../api/models";
+
+import { WiThermometer, WiHumidity } from "react-icons/wi";
+import { MdEnergySavingsLeaf } from "react-icons/md";
+
 interface RecommendationTableProps {
   data: Recommendation[];
 }
 
 const solutionCondition: Record<string, string> = {
-  S1: "If you want to stay in comfort set",
-  S2: "If you want to minimize energy consumption without taking into account comfort set",
-  S3: "If you want to minimize energy consumption with an acceptable comfort set",
+  S1: "To stay in comfort set",
+  S2: "To minimize energy consumption without taking into account comfort set",
+  S3: "To minimize energy consumption with an acceptable comfort set",
 };
 
 const RecommendationTable = ({ data }: RecommendationTableProps) => {
@@ -20,21 +24,24 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         {
           setting: "Internal Temperature",
           value: `${recomendation.avgTempC} °C`,
+          icon: <WiThermometer className="text-danger fs-3" />,
         },
         {
           setting: "Relative Humidity",
           value: `${recomendation.avgHumidity} %`,
+          icon: <WiHumidity className="text-primary fs-3" />,
         },
         {
           setting: "Energy Saving",
           value: `${recomendation.energySavings} %`,
+          icon: <MdEnergySavingsLeaf className="text-warning fs-4" />,
         },
       ],
     };
   });
 
   return (
-    <Table bordered hover>
+    <Table bordered>
       <thead className="sticky-top">
         <tr>
           <th>Condition</th>
@@ -46,14 +53,16 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         {dataWithCondition?.length > 0 ? (
           dataWithCondition?.map((recommendation) =>
             recommendation.settings.map((setting, settingIndex) => (
-              <tr key={settingIndex} className="hoverable-row">
+              <tr key={settingIndex}>
                 {settingIndex == 0 && (
                   <td rowSpan={3} style={{ maxWidth: "250px" }}>
                     <strong>{recommendation.condition}</strong>
                   </td>
                 )}
-                <td>{setting.setting}</td>
-                <td>{setting.value}</td>
+                <td>
+                  {setting.setting} {setting.icon}
+                </td>
+                <td className="fw-bold">{setting.value}</td>
               </tr>
             ))
           )

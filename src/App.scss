@@ -10,6 +10,11 @@
   }
 }
 
-// .hoverable-row:hover td {
-//   background-color: #961010 !important; 
-// }
+.hoverable-row:hover td {
+  background-color: $secondary !important; 
+  opacity: 0.5;
+}
+
+.striped-row {
+  background-color: #580d0d !important /* light gray */
+}
