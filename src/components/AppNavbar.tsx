@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { TbLogout } from "react-icons/tb";
 
 import Navbar from "react-bootstrap/Navbar";
@@ -7,23 +7,23 @@ import Nav from "react-bootstrap/Nav";
 
 import dedalusIcon from "../assets/DEDALUS-Icon-White.png";
 
+import useAuth from "../hooks/useAuth";
+
 const AppNavbar = () => {
-  const navigate = useNavigate();
-  const isAuthenticated = localStorage.getItem("isAuthenticated");
+  const {isAuthenticated, logUserOut} = useAuth()
 
   const handleLogout = () => {
-    navigate("/login");
-    localStorage.setItem("accessToken", "");
-    localStorage.setItem("isAuthenticated", "");
+    logUserOut()
   };
+
   return (
     <Navbar expand="lg" data-bs-theme="dark" className="p-0 bg-primary">
       <Container>
         <Navbar.Brand className="pe-4">
           <img src={dedalusIcon} alt="Logo" width="50" height="50"></img>
-          <p style={{ fontSize: "12px", textAlign: "right", margin: 0 }}>
-            ITALY
-          </p>
+          <span style={{ fontSize: "16px", textAlign: "right"}}>
+            Digital Twin ITALY
+          </span>
         </Navbar.Brand>
 
         {isAuthenticated && (

@@ -19,6 +19,7 @@ import { TitoGarzoniBuildingPage } from "./pages/TitoGarzoniBuildingPage";
 import AlertContextProvider from "./context/AlertContext";
 import useAlertToast from "./hooks/useAlertToast";
 import Login from "./pages/Login";
+import AuthProvider from "./context/AuthProvider";
 
 function App() {
   // const navigate = useNavigate();
@@ -28,8 +29,6 @@ function App() {
       onError: (error: any) => {
         if (error.status === 401) {
           window.location.href = "/login";
-          localStorage.setItem("accessToken", "");
-          localStorage.setItem("isAuthenticated", "");
         }
 
         notifyError(error.message);
@@ -40,22 +39,24 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <Router>
-          <AlertContextProvider>
-            <AppNavbar />
-            <Routes>
-              <Route path="/" element={<Navigate to="/login" />}></Route>
-              {/* <Route path="/tito-garzoni-house" element={<TitoGarzoniBuildingPage />}></Route> */}
-              <Route
-                path="/tito-garzoni-house"
-                element={<TitoGarzoniBuildingPage />}
-              ></Route>
-              <Route
-                path="/maddalena-house"
-                element={<MaddalenaBuildingPage />}
-              ></Route>
-              <Route path="/login" element={<Login />}></Route>
-            </Routes>
-          </AlertContextProvider>
+          <AuthProvider>
+            <AlertContextProvider>
+              <AppNavbar />
+              <Routes>
+                <Route path="/" element={<Navigate to="/login" />}></Route>
+                {/* <Route path="/tito-garzoni-house" element={<TitoGarzoniBuildingPage />}></Route> */}
+                <Route
+                  path="/tito-garzoni-house"
+                  element={<TitoGarzoniBuildingPage />}
+                ></Route>
+                <Route
+                  path="/maddalena-house"
+                  element={<MaddalenaBuildingPage />}
+                ></Route>
+                <Route path="/login" element={<Login />}></Route>
+              </Routes>
+            </AlertContextProvider>
+          </AuthProvider>
         </Router>
       </QueryClientProvider>
     </>

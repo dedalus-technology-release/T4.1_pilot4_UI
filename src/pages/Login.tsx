@@ -12,17 +12,17 @@ import useAlertToast from "../hooks/useAlertToast";
 import { useLogin } from "../hooks/useLogin";
 
 import { IFormInput } from "../api/models";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const {logUserIn} = useAuth()
   const { notifyError } = useAlertToast();
 
   const loginMutation = useLogin({
     onSuccess: () => {
-      navigate("/tito-garzoni-house");
+      logUserIn()
     },
     onError: (e: Error) => {
-      console.log("samo test", e);
       notifyError(e.message);
     },
   });
@@ -33,7 +33,6 @@ const Login = () => {
     handleSubmit,
   } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    console.log(data);
     loginMutation.mutate(data);
   };
 
