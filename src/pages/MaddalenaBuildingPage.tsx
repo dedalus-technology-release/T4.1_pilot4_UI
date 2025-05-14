@@ -14,6 +14,20 @@ import { useRecommendation, useSPMV, useTsv } from "../hooks/useComfort";
 import { BUILDING, MADDALENA_HOUSE } from "../utils/buildings";
 import CircularProgress from "../components/CircularProgress";
 
+const consumptionData = [
+  { date: "2024-01-09T00:00:00", consumption: 3 },
+  { date: "2024-01-09T00:01:00", consumption: 3 },
+  { date: "2024-01-09T00:02:00", consumption: 3 },
+  { date: "2024-01-09T00:03:00", consumption: 3 },
+  { date: "2024-01-09T00:04:00", consumption: 3 },
+  { date: "2024-01-09T00:05:00", consumption: 3 },
+  { date: "2024-01-09T00:06:00", consumption: 4 },
+  { date: "2024-01-09T00:07:00", consumption: 5 },
+  { date: "2024-01-09T00:08:00", consumption: 4 },
+  { date: "2024-01-09T00:09:00", consumption: 5 },
+  { date: "2024-01-09T00:10:00", consumption: 5 },
+];
+
 export const MaddalenaBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState(null);
   // const {
@@ -28,11 +42,11 @@ export const MaddalenaBuildingPage = () => {
     isFetching: spmvFetching,
   } = useSPMV(MADDALENA_HOUSE, selectedApartment);
 
-  const {
-    data: consumptionData,
-    isPending: consumptionPending,
-    isFetching: consumptionFetching,
-  } = useConsumption();
+  // const {
+  //   data: consumptionData,
+  //   isPending: consumptionPending,
+  //   isFetching: consumptionFetching,
+  // } = useConsumption();
 
   const {
     data: recommendationData,
