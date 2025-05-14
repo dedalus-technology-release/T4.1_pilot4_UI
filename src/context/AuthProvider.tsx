@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { logout, verifyUser } from "../api/user";
 
 interface AuthContextProps {

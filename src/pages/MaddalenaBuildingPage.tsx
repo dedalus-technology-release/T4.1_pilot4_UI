@@ -7,12 +7,14 @@ import LineChart from "../components/charts/LineChart";
 import RecommendationTable from "../components/RecommendationTable";
 import DataDisplayCard from "../components/cards/DataDisplayCard";
 import { CustomSelect } from "../components/CustomSelect";
+import CircularProgress from "../components/CircularProgress";
 
-import { useConsumption } from "../hooks/useConsumption";
-import { useRecommendation, useSPMV, useTsv } from "../hooks/useComfort";
+// import { useConsumption } from "../hooks/useConsumption";
+import { useRecommendation, useSPMV } from "../hooks/useComfort";
 
 import { BUILDING, MADDALENA_HOUSE } from "../utils/buildings";
-import CircularProgress from "../components/CircularProgress";
+
+import { Option } from "../api/models";
 
 const consumptionData = [
   { date: "2024-01-09T00:00:00", consumption: 3 },
@@ -29,7 +31,7 @@ const consumptionData = [
 ];
 
 export const MaddalenaBuildingPage = () => {
-  const [selectedApartment, setSelectedApartment] = useState(null);
+  const [selectedApartment, setSelectedApartment] = useState<string | null>(null);
   // const {
   //   data: tsvData,
   //   isPending: tsvPending,
@@ -40,7 +42,7 @@ export const MaddalenaBuildingPage = () => {
     data: spmvData,
     isPending: spmvPending,
     isFetching: spmvFetching,
-  } = useSPMV(MADDALENA_HOUSE, selectedApartment);
+  } = useSPMV(MADDALENA_HOUSE, selectedApartment || "");
 
   // const {
   //   data: consumptionData,
@@ -52,7 +54,7 @@ export const MaddalenaBuildingPage = () => {
     data: recommendationData,
     isPending: recommendationPending,
     isFetching: recommendationFetching,
-  } = useRecommendation(MADDALENA_HOUSE, selectedApartment);
+  } = useRecommendation(MADDALENA_HOUSE, selectedApartment || "");
 
   // const loadingTsv = tsvPending || tsvFetching;
   const loadingSpmv = spmvPending || spmvFetching;
@@ -126,8 +128,8 @@ export const MaddalenaBuildingPage = () => {
                   value: selectedApartment ?? "",
                   label: selectedApartment ?? "",
                 }}
-                onChange={(e: Record<string, string>) =>
-                  setSelectedApartment(e.value || null)
+                onChange={(selectedOption: Option | null) =>
+                  setSelectedApartment(selectedOption?.value || null)
                 }
                 placeholderText=""
               />

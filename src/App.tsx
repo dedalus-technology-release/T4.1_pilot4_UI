@@ -4,7 +4,6 @@ import {
   Route,
   BrowserRouter as Router,
   Routes,
-  useNavigate,
 } from "react-router-dom";
 import {
   QueryCache,
@@ -13,17 +12,15 @@ import {
 } from "@tanstack/react-query";
 
 import AppNavbar from "./components/AppNavbar";
-// import { Dashboard } from "./pages/TitoGarzoniBuildingPage";
 import { MaddalenaBuildingPage } from "./pages/MaddalenaBuildingPage";
 import { TitoGarzoniBuildingPage } from "./pages/TitoGarzoniBuildingPage";
 import AlertContextProvider from "./context/AlertContext";
 import useAlertToast from "./hooks/useAlertToast";
 import Login from "./pages/Login";
 import AuthProvider from "./context/AuthProvider";
-import ProtectedRoute from "./components/protectedRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  // const navigate = useNavigate();
   const { notifyError } = useAlertToast();
   const queryClient = new QueryClient({
     queryCache: new QueryCache({
@@ -49,18 +46,18 @@ function App() {
                 <Route
                   path="/tito-garzoni-house"
                   element={
-                    <ProtectedRoute>
+                    <PrivateRoute>
                       <TitoGarzoniBuildingPage />
-                    </ProtectedRoute>
+                    </PrivateRoute>
                   }
                 ></Route>
 
                 <Route
                   path="/maddalena-house"
                   element={
-                    <ProtectedRoute>
+                    <PrivateRoute>
                       <MaddalenaBuildingPage />
-                    </ProtectedRoute>
+                    </PrivateRoute>
                   }
                 ></Route>
                 <Route path="/login" element={<Login />}></Route>

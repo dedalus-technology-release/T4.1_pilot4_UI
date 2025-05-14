@@ -1,6 +1,8 @@
 import { createContext } from "react";
 import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
+
 export const AlertContext = createContext({});
 
 interface AlertContextProviderProps {

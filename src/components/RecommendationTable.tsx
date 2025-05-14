@@ -1,9 +1,8 @@
 import Table from "react-bootstrap/Table";
-
-import { Recommendation } from "../api/models";
-
 import { WiThermometer, WiHumidity } from "react-icons/wi";
 import { MdEnergySavingsLeaf } from "react-icons/md";
+
+import { Recommendation } from "../api/models";
 
 interface RecommendationTableProps {
   data: Recommendation[];

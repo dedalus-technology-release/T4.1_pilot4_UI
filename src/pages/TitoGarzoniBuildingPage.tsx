@@ -7,12 +7,13 @@ import LineChart from "../components/charts/LineChart";
 import RecommendationTable from "../components/RecommendationTable";
 import DataDisplayCard from "../components/cards/DataDisplayCard";
 import { CustomSelect } from "../components/CustomSelect";
+import CircularProgress from "../components/CircularProgress";
 
-import { useConsumption } from "../hooks/useConsumption";
-import { useRecommendation, useSPMV, useTsv } from "../hooks/useComfort";
+import { useRecommendation, useSPMV } from "../hooks/useComfort";
 
 import { BUILDING, TITO_GARZONI_HOUSE } from "../utils/buildings";
-import CircularProgress from "../components/CircularProgress";
+
+import { Option } from "../api/models";
 
 const consumptionData = [
   { "date": "2024-01-09T00:00:00", "consumption": 3 },
@@ -29,7 +30,7 @@ const consumptionData = [
 ]
 
 export const TitoGarzoniBuildingPage = () => {
-  const [selectedApartment, setSelectedApartment] = useState(null);
+  const [selectedApartment, setSelectedApartment] = useState<string | null>(null);
   // const {
   //   data: tsvData,
   //   isPending: tsvPending,
@@ -40,7 +41,7 @@ export const TitoGarzoniBuildingPage = () => {
     data: spmvData,
     isPending: spmvPending,
     isFetching: spmvFetching,
-  } = useSPMV(TITO_GARZONI_HOUSE, selectedApartment);
+  } = useSPMV(TITO_GARZONI_HOUSE, selectedApartment || "");
 
   // const {
   //   data: consumptionData,
@@ -52,7 +53,7 @@ export const TitoGarzoniBuildingPage = () => {
     data: recommendationData,
     isPending: recommendationPending,
     isFetching: recommendationFetching,
-  } = useRecommendation(TITO_GARZONI_HOUSE, selectedApartment);
+  } = useRecommendation(TITO_GARZONI_HOUSE, selectedApartment || "");
 
   // const loadingTsv = tsvPending || tsvFetching;
   const loadingSpmv = spmvPending || spmvFetching;
@@ -75,7 +76,7 @@ export const TitoGarzoniBuildingPage = () => {
   //   ],
   // };
 
-  const spmvChartData = spmvData && {
+  const spmvChartData = spmvData ? {
     labels: spmvData?.map((record) => record.time),
     datasets: [
       {
@@ -86,7 +87,7 @@ export const TitoGarzoniBuildingPage = () => {
         borderColor: "rgba(54,162,235,1)",
       },
     ],
-  };
+  } : undefined;
 
   const consumptionChartData = consumptionData && {
     labels: consumptionData.map((record) => record.date),
@@ -109,6 +110,8 @@ export const TitoGarzoniBuildingPage = () => {
   useEffect(() => {
     setSelectedApartment(apartmentOptions?.[0].value || "");
   }, []);
+
+  console.log("spmv", spmvChartData)
   return (
     <>
       <Container className="py-2">
@@ -126,8 +129,8 @@ export const TitoGarzoniBuildingPage = () => {
                   value: selectedApartment ?? "",
                   label: selectedApartment ?? "",
                 }}
-                onChange={(e: Record<string, string>) =>
-                  setSelectedApartment(e.value || null)
+                onChange={(e: Option | null) =>
+                  setSelectedApartment(e?.value || null)
                 }
                 placeholderText=""
               />

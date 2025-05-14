@@ -1,6 +1,6 @@
 import { API_URL_PROD } from "../utils/Constant";
 import api from "./axiosConfig";
-import { IFormInput, SPMV, Token } from "./models";
+import { IFormInput, Token } from "./models";
 
 export const login = async (credentials: IFormInput): Promise<Token> => {
   try {

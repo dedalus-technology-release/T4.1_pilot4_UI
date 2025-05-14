@@ -1,13 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { TbLogout } from "react-icons/tb";
-
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 
-import dedalusIcon from "../assets/DEDALUS-Icon-White.png";
-
 import useAuth from "../hooks/useAuth";
+
+import dedalusIcon from "../assets/DEDALUS-Icon-White.png";
 
 const AppNavbar = () => {
   const {isAuthenticated, logUserOut} = useAuth()

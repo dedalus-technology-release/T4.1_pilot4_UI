@@ -9,12 +9,12 @@ interface LineChartProps {
     labels?: string[];
     datasets: {
       label?: string;
-      data: number[];
+      data: (string | number)[];
       fill?: boolean;
       backgroundColor?: string;
       borderColor?: string;
     }[];
-  };
+  } | undefined;
 
   dataLength?: number;
   unit?: string;
@@ -27,7 +27,7 @@ const LineChart = memo(
       datasets: [
         {
           label: dataLength && dataLength > 0 ? "Select" : "No Data",
-          data: [0],
+          data: [0 as number],
           fill: true,
           backgroundColor: "rgba(226,243,235,0.5)",
           borderColor: "rgba(147,208,167,255)",
@@ -43,10 +43,11 @@ const LineChart = memo(
       scales: {
         y: {
           ticks: {
-            callback: function (value: number) {
+            callback: function (tickValue: string | number) {
+              const value = typeof tickValue === "number" ? tickValue : parseFloat(tickValue);
               return unit
                 ? `${value.toFixed(2)} ${unit}`
-                : `${value.toFixed(2)}`; // Add your unit of measurement here
+                : `${value.toFixed(2)}`;
             },
           },
         },

@@ -1,7 +1,7 @@
 import { API_URL, API_URL_PROD } from "../utils/Constant";
 import { normalizeRecommendationData } from "../utils/normalizeRecommendationData";
 import api from "./axiosConfig";
-import { TSV, SPMV, Recommendation } from "./models";
+import { TSV, SPMV } from "./models";
 
 export const getTsv = async (): Promise<TSV[]> => {
   try {
