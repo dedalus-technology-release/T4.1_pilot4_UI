@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaLock } from "react-icons/fa";
 import Container from "react-bootstrap/esm/Container";
@@ -14,12 +15,12 @@ import useAuth from "../hooks/useAuth";
 import { IFormInput } from "../api/models";
 
 const Login = () => {
-  const {logUserIn} = useAuth()
+  const { logUserIn, isAuthenticated } = useAuth();
   const { notifyError } = useAlertToast();
 
   const loginMutation = useLogin({
     onSuccess: () => {
-      logUserIn()
+      logUserIn();
     },
     onError: (e: Error) => {
       notifyError(e.message);
@@ -35,6 +36,9 @@ const Login = () => {
     loginMutation.mutate(data);
   };
 
+  if (isAuthenticated) {
+    return <Navigate to="/tito-garzoni-house" />;
+  }
   return (
     <>
       <Container
@@ -60,7 +64,7 @@ const Login = () => {
               </Form.Label>
               <Col sm={12}>
                 <Form.Control
-                  placeholder="Username"
+                  autoComplete="current-username"
                   {...register("username", { required: true })}
                   isInvalid={!!errors.username}
                 />
@@ -85,6 +89,7 @@ const Login = () => {
                 <Form.Control
                   type="password"
                   placeholder="Password"
+                  autoComplete="current-password"
                   {...register("password", { required: true })}
                   isInvalid={!!errors.password}
                   className="w-100"

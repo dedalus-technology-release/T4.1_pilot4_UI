@@ -54,7 +54,12 @@ export const AuthProvider = ({ children }: AuthContextPropsType) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, loading, logUserIn, logUserOut }}
+      value={{
+        isAuthenticated,
+        loading,
+        logUserIn,
+        logUserOut,
+      }}
     >
       {children}
     </AuthContext.Provider>

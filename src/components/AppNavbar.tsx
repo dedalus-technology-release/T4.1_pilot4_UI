@@ -21,7 +21,7 @@ const AppNavbar = () => {
         <Navbar.Brand className="pe-4">
           <img src={dedalusIcon} alt="Logo" width="50" height="50"></img>
           <span style={{ fontSize: "16px", textAlign: "right"}}>
-            Digital Twin ITALY
+            Digital Twin Italy
           </span>
         </Navbar.Brand>
 

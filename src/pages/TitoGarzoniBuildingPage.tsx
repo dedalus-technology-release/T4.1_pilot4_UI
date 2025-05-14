@@ -111,7 +111,6 @@ export const TitoGarzoniBuildingPage = () => {
     setSelectedApartment(apartmentOptions?.[0].value || "");
   }, []);
 
-  console.log("spmv", spmvChartData)
   return (
     <>
       <Container className="py-2">
