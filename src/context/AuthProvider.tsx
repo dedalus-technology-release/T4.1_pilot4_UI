@@ -4,6 +4,7 @@ import { logout, verifyUser } from "../api/user";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
+  loading: boolean;
   logUserIn: () => void;
   logUserOut: () => void;
 }
@@ -16,6 +17,7 @@ export const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider = ({ children }: AuthContextPropsType) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const checkAuth = async () => {
@@ -26,14 +28,17 @@ export const AuthProvider = ({ children }: AuthContextPropsType) => {
       } else {
         setIsAuthenticated(false);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   const logUserOut = async () => {
     try {
       await logout();
       setIsAuthenticated(false);
-      navigate("/login")
+      navigate("/login");
     } catch (error) {}
   };
 
@@ -47,7 +52,9 @@ export const AuthProvider = ({ children }: AuthContextPropsType) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, logUserIn, logUserOut }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, loading, logUserIn, logUserOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

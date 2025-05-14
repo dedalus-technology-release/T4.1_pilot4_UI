@@ -20,6 +20,7 @@ import AlertContextProvider from "./context/AlertContext";
 import useAlertToast from "./hooks/useAlertToast";
 import Login from "./pages/Login";
 import AuthProvider from "./context/AuthProvider";
+import ProtectedRoute from "./components/protectedRoute";
 
 function App() {
   // const navigate = useNavigate();
@@ -47,13 +48,26 @@ function App() {
                 {/* <Route path="/tito-garzoni-house" element={<TitoGarzoniBuildingPage />}></Route> */}
                 <Route
                   path="/tito-garzoni-house"
-                  element={<TitoGarzoniBuildingPage />}
+                  element={
+                    <ProtectedRoute>
+                      <TitoGarzoniBuildingPage />
+                    </ProtectedRoute>
+                  }
                 ></Route>
+
                 <Route
                   path="/maddalena-house"
-                  element={<MaddalenaBuildingPage />}
+                  element={
+                    <ProtectedRoute>
+                      <MaddalenaBuildingPage />
+                    </ProtectedRoute>
+                  }
                 ></Route>
                 <Route path="/login" element={<Login />}></Route>
+                <Route
+                  path="*"
+                  element={<Navigate to="/tito-garzoni-house" />}
+                />
               </Routes>
             </AlertContextProvider>
           </AuthProvider>
