@@ -151,7 +151,7 @@ export const MaddalenaBuildingPage = () => {
               classCard="mb-3"
               classCardBody="p-2"
             >
-              <LineChart inputChartData={spmvChartData} dataLength={1} />
+              <LineChart inputChartData={spmvChartData} dataLength={1} minLabelValue={-3} maxLabelValue={3} />
             </DataDisplayCard>
             <DataDisplayCard
               title="Consumption"

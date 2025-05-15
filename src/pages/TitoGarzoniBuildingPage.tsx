@@ -16,21 +16,23 @@ import { BUILDING, TITO_GARZONI_HOUSE } from "../utils/buildings";
 import { Option } from "../api/models";
 
 const consumptionData = [
-  { "date": "2024-01-09T00:00:00", "consumption": 3 },
-  { "date": "2024-01-09T00:01:00", "consumption": 3 },
-  { "date": "2024-01-09T00:02:00", "consumption": 3 },
-  { "date": "2024-01-09T00:03:00", "consumption": 3 },
-  { "date": "2024-01-09T00:04:00", "consumption": 3 },
-  { "date": "2024-01-09T00:05:00", "consumption": 3 },
-  { "date": "2024-01-09T00:06:00", "consumption": 4 },
-  { "date": "2024-01-09T00:07:00", "consumption": 5 },
-  { "date": "2024-01-09T00:08:00", "consumption": 4 },
-  { "date": "2024-01-09T00:09:00", "consumption": 5 },
-  { "date": "2024-01-09T00:10:00", "consumption": 5 }
-]
+  { date: "2024-01-09T00:00:00", consumption: 3 },
+  { date: "2024-01-09T00:01:00", consumption: 3 },
+  { date: "2024-01-09T00:02:00", consumption: 3 },
+  { date: "2024-01-09T00:03:00", consumption: 3 },
+  { date: "2024-01-09T00:04:00", consumption: 3 },
+  { date: "2024-01-09T00:05:00", consumption: 3 },
+  { date: "2024-01-09T00:06:00", consumption: 4 },
+  { date: "2024-01-09T00:07:00", consumption: 5 },
+  { date: "2024-01-09T00:08:00", consumption: 4 },
+  { date: "2024-01-09T00:09:00", consumption: 5 },
+  { date: "2024-01-09T00:10:00", consumption: 5 },
+];
 
 export const TitoGarzoniBuildingPage = () => {
-  const [selectedApartment, setSelectedApartment] = useState<string | null>(null);
+  const [selectedApartment, setSelectedApartment] = useState<string | null>(
+    null
+  );
   // const {
   //   data: tsvData,
   //   isPending: tsvPending,
@@ -76,18 +78,20 @@ export const TitoGarzoniBuildingPage = () => {
   //   ],
   // };
 
-  const spmvChartData = spmvData ? {
-    labels: spmvData?.map((record) => record.time),
-    datasets: [
-      {
-        label: `SPMV`,
-        data: spmvData?.map((record) => record.forecasted_sPMV.toFixed(2)),
-        fill: true,
-        backgroundColor: "rgba(54,162,235,0.5)",
-        borderColor: "rgba(54,162,235,1)",
-      },
-    ],
-  } : undefined;
+  const spmvChartData = spmvData
+    ? {
+        labels: spmvData?.map((record) => record.time),
+        datasets: [
+          {
+            label: `SPMV`,
+            data: spmvData?.map((record) => record.forecasted_sPMV.toFixed(2)),
+            fill: true,
+            backgroundColor: "rgba(54,162,235,0.5)",
+            borderColor: "rgba(54,162,235,1)",
+          },
+        ],
+      }
+    : undefined;
 
   const consumptionChartData = consumptionData && {
     labels: consumptionData.map((record) => record.date),
@@ -151,7 +155,12 @@ export const TitoGarzoniBuildingPage = () => {
               classCard="mb-3"
               classCardBody="p-2"
             >
-              <LineChart inputChartData={spmvChartData} dataLength={1} />
+              <LineChart
+                inputChartData={spmvChartData}
+                dataLength={1}
+                minLabelValue={-3}
+                maxLabelValue={3}
+              />
             </DataDisplayCard>
             <DataDisplayCard
               title="Consumption"
@@ -176,7 +185,6 @@ export const TitoGarzoniBuildingPage = () => {
             </DataDisplayCard>
           </Col>
         </Row>
-
       </Container>
     </>
   );

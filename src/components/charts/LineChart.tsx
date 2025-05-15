@@ -5,23 +5,33 @@ import "chart.js/auto";
 
 Chart.register(Filler, Tooltip, Legend);
 interface LineChartProps {
-  inputChartData?: {
-    labels?: string[];
-    datasets: {
-      label?: string;
-      data: (string | number)[];
-      fill?: boolean;
-      backgroundColor?: string;
-      borderColor?: string;
-    }[];
-  } | undefined;
+  inputChartData?:
+    | {
+        labels?: string[];
+        datasets: {
+          label?: string;
+          data: (string | number)[];
+          fill?: boolean;
+          backgroundColor?: string;
+          borderColor?: string;
+        }[];
+      }
+    | undefined;
 
   dataLength?: number;
   unit?: string;
+  minLabelValue?: number;
+  maxLabelValue?: number;
 }
 
 const LineChart = memo(
-  ({ inputChartData, dataLength, unit }: LineChartProps) => {
+  ({
+    inputChartData,
+    dataLength,
+    unit,
+    minLabelValue,
+    maxLabelValue,
+  }: LineChartProps) => {
     const placeholderData = {
       labels: ["No Data"],
       datasets: [
@@ -42,9 +52,17 @@ const LineChart = memo(
       maintainAspectRatio: false,
       scales: {
         y: {
+          min: minLabelValue,
+          max: maxLabelValue,
           ticks: {
             callback: function (tickValue: string | number) {
-              const value = typeof tickValue === "number" ? tickValue : parseFloat(tickValue);
+              const value =
+                typeof tickValue === "number"
+                  ? tickValue
+                  : parseFloat(tickValue);
+              if (minLabelValue !== undefined && maxLabelValue !== undefined) {
+                return value;
+              }
               return unit
                 ? `${value.toFixed(2)} ${unit}`
                 : `${value.toFixed(2)}`;
