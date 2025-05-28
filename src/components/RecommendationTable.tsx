@@ -54,7 +54,7 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
             recommendation.settings.map((setting, settingIndex) => (
               <tr key={settingIndex}>
                 {settingIndex == 0 && (
-                  <td rowSpan={3} style={{ maxWidth: "250px" }}>
+                  <td rowSpan={3} style={{ maxWidth: "220px" }}>
                     <strong>{recommendation.condition}</strong>
                   </td>
                 )}

@@ -48,7 +48,7 @@ const Login = () => {
           height: "85vh",
         }}
       >
-        <Card className="p-4">
+        <Card className="p-4 bg-primary text-white shadow-lg">
           <h3 className="text-center">Login</h3>
           <h3 className="text-center ">
             <FaLock className="text-warning" />
@@ -64,6 +64,7 @@ const Login = () => {
               </Form.Label>
               <Col sm={12}>
                 <Form.Control
+                  placeholder="Username"
                   autoComplete="current-username"
                   {...register("username", { required: true })}
                   isInvalid={!!errors.username}
@@ -103,8 +104,13 @@ const Login = () => {
               </Col>
             </Form.Group>
             <Form.Group>
-              <Button variant="outline-warning" type="submit" className="w-100">
-                Login
+              <Button
+                // variant="warning text-white font-weight-bold"
+                type="submit"
+                className="w-100 bg-secondary text-white font-weight-bold"
+                disabled={loginMutation.isPending}
+              >
+                LOGIN
               </Button>
             </Form.Group>
           </Form>
