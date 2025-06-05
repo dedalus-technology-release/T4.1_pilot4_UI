@@ -14,6 +14,7 @@ interface LineChartProps {
           fill?: boolean;
           backgroundColor?: string;
           borderColor?: string;
+          borderDash?: number[];
         }[];
       }
     | undefined;

@@ -13,31 +13,17 @@ import { useRecommendation, useSPMV } from "../hooks/useComfort";
 
 import { BUILDING, TITO_GARZONI_HOUSE } from "../utils/buildings";
 
-import { Option } from "../api/models";
+import { FlexibilityHeating, Option } from "../api/models";
+import {
+  useFlexiblityHeatingForecast,
+  useTodaysEnergy,
+} from "../hooks/useEnergy";
 
-const consumptionData = [
-  { date: "2024-01-09T00:00:00", consumption: 3 },
-  { date: "2024-01-09T00:01:00", consumption: 3 },
-  { date: "2024-01-09T00:02:00", consumption: 3 },
-  { date: "2024-01-09T00:03:00", consumption: 3 },
-  { date: "2024-01-09T00:04:00", consumption: 3 },
-  { date: "2024-01-09T00:05:00", consumption: 3 },
-  { date: "2024-01-09T00:06:00", consumption: 4 },
-  { date: "2024-01-09T00:07:00", consumption: 5 },
-  { date: "2024-01-09T00:08:00", consumption: 4 },
-  { date: "2024-01-09T00:09:00", consumption: 5 },
-  { date: "2024-01-09T00:10:00", consumption: 5 },
-];
 
 export const TitoGarzoniBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState<string | null>(
     null
   );
-  // const {
-  //   data: tsvData,
-  //   isPending: tsvPending,
-  //   isFetching: tsvFetching,
-  // } = useTsv();
 
   const {
     data: spmvData,
@@ -45,11 +31,16 @@ export const TitoGarzoniBuildingPage = () => {
     isFetching: spmvFetching,
   } = useSPMV(TITO_GARZONI_HOUSE, selectedApartment || "");
 
-  // const {
-  //   data: consumptionData,
-  //   isPending: consumptionPending,
-  //   isFetching: consumptionFetching,
-  // } = useConsumption();
+  const {
+    data: flexHeatingData,
+    isPending: flexHeatingPending,
+    isFetching: flexHeatingFetching,
+  } = useFlexiblityHeatingForecast(TITO_GARZONI_HOUSE, selectedApartment || "");
+  const {
+    data: energyData,
+    isPending: energyPending,
+    isFetching: energyFetching,
+  } = useTodaysEnergy(TITO_GARZONI_HOUSE, selectedApartment || "");
 
   const {
     data: recommendationData,
@@ -57,26 +48,13 @@ export const TitoGarzoniBuildingPage = () => {
     isFetching: recommendationFetching,
   } = useRecommendation(TITO_GARZONI_HOUSE, selectedApartment || "");
 
-  // const loadingTsv = tsvPending || tsvFetching;
   const loadingSpmv = spmvPending || spmvFetching;
   const loadingRecommendation = recommendationPending || recommendationFetching;
-  // const loadingConsumption = consumptionPending || consumptionFetching;
+  const loadingFlexHeating = flexHeatingPending || flexHeatingFetching;
+  const loadingEnergy = energyPending || energyFetching;
 
-  const isLoading = loadingSpmv || loadingRecommendation;
-  // || loadingConsumption loadingTsv ||;
-
-  // const tsvChartData = tsvData && {
-  //   labels: tsvData.map((record) => record.date),
-  //   datasets: [
-  //     {
-  //       label: `TSV`,
-  //       data: tsvData.map((record) => record.tsv),
-  //       fill: true,
-  //       backgroundColor: "rgb(255, 190, 0)",
-  //       borderColor: "rgb(255, 190, 0)",
-  //     },
-  //   ],
-  // };
+  const isLoading =
+    loadingSpmv || loadingRecommendation || loadingFlexHeating || loadingEnergy;
 
   const spmvChartData = spmvData
     ? {
@@ -86,22 +64,53 @@ export const TitoGarzoniBuildingPage = () => {
             label: `SPMV`,
             data: spmvData?.map((record) => record.forecasted_sPMV.toFixed(2)),
             fill: true,
-            backgroundColor: "rgba(54,162,235,0.5)",
-            borderColor: "rgba(54,162,235,1)",
+            borderColor: "rgba(0, 72, 230, 1)",
+            backgroundColor: "rgba(0, 72, 230, 0.5)",
           },
         ],
       }
     : undefined;
 
-  const consumptionChartData = consumptionData && {
-    labels: consumptionData.map((record) => record.date),
+  const flexHeatingChartData = flexHeatingData && {
+    labels: flexHeatingData?.map((record) => record.time),
     datasets: [
       {
-        label: `CONSUMPTION`,
-        data: consumptionData.map((record) => record.consumption),
-        fill: true,
-        backgroundColor: "rgba(54,162,235,0.5)",
-        borderColor: "rgba(54,162,235,1)",
+        label: `Baseline`,
+        data:
+          flexHeatingData?.map((record: FlexibilityHeating) =>
+            Number(record?.baseline).toFixed(2)
+          ) ?? [],
+        backgroundColor: "rgba(0, 72, 230, 0.5)",
+        borderColor: "rgba(0, 72, 230, 0.8)",
+      },
+      {
+        label: `Average Energy`,
+        data:
+          energyData?.energy_a?.map((record) =>
+            Number(record.value).toFixed(2)
+          ) ?? [],
+        backgroundColor: "rgba(255, 190, 0, 0.5)",
+        borderColor: "rgba(255, 190, 0, 1)",
+      },
+      {
+        label: `Flexibility Above`,
+        data:
+          flexHeatingData?.map((record) =>
+            Number(record?.flexibility_above).toFixed(2)
+          ) ?? [],
+        fill: false,
+        borderDash: [2, 6],
+        borderColor: "rgba(40, 167, 69, 0.7)",
+      },
+      {
+        label: `Flexibility Below `,
+        data:
+          flexHeatingData?.map((record) =>
+            Number(record?.flexibility_below).toFixed(2)
+          ) ?? [],
+        fill: false,
+        borderDash: [4, 4],
+        borderColor: "rgba(140, 215, 144, 0.7)",
       },
     ],
   };
@@ -142,13 +151,18 @@ export const TitoGarzoniBuildingPage = () => {
         </Row>
 
         <Row data-masonry='{"percentPosition": true }'>
-          <Col lg={6}>
-            {/* <DataDisplayCard
-              title="Thermal Sensation"
+          <Col lg={7}>
+            <DataDisplayCard
+              title="Energy Flexibility Heating"
               classCard="mb-3"
-              classCardBody="p-4">
-              <BarChart inputChartData={tsvChartData} dataLength={1} />
-            </DataDisplayCard> */}
+              classCardBody="p-2"
+            >
+              <LineChart
+                inputChartData={flexHeatingChartData}
+                dataLength={1}
+                unit="kWh"
+              />
+            </DataDisplayCard>
 
             <DataDisplayCard
               title="sPMV Prediction"
@@ -162,20 +176,9 @@ export const TitoGarzoniBuildingPage = () => {
                 maxLabelValue={3}
               />
             </DataDisplayCard>
-            <DataDisplayCard
-              title="Consumption"
-              classCard="mb-3"
-              classCardBody="p-2"
-            >
-              <LineChart
-                inputChartData={consumptionChartData}
-                dataLength={1}
-                unit="kWh"
-              />
-            </DataDisplayCard>
           </Col>
 
-          <Col lg={6}>
+          <Col lg={5}>
             <DataDisplayCard
               title="Recommendation"
               classCard="mb-3"
