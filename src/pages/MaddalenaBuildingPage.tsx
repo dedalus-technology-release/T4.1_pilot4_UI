@@ -60,7 +60,7 @@ export const MaddalenaBuildingPage = () => {
     datasets: [
       {
         label: `SPMV`,
-        data: spmvData?.map((record) => record.forecasted_sPMV.toFixed(2)),
+        data: spmvData?.map((record) => record.forecastedSPmv.toFixed(2)),
         fill: true,
         borderColor: "rgba(0, 72, 230, 1)",
         backgroundColor: "rgba(0, 72, 230, 0.5)",
@@ -82,7 +82,7 @@ export const MaddalenaBuildingPage = () => {
       {
         label: `Average Energy`,
         data:
-          energyData?.energy_a?.map((record) =>
+          energyData?.energyA?.map((record) =>
             Number(record.value).toFixed(2)
           ) ?? [],
         backgroundColor: "rgba(255, 190, 0, 0.5)",
@@ -92,7 +92,7 @@ export const MaddalenaBuildingPage = () => {
         label: `Flexibility Above`,
         data:
           flexHeatingData?.map((record) =>
-            Number(record?.flexibility_above).toFixed(2)
+            Number(record?.flexibilityAbove).toFixed(2)
           ) ?? [],
         fill: false,
         borderDash: [2, 6],
@@ -102,7 +102,7 @@ export const MaddalenaBuildingPage = () => {
         label: `Flexibility Below `,
         data:
           flexHeatingData?.map((record) =>
-            Number(record?.flexibility_below).toFixed(2)
+            Number(record?.flexibilityBelow).toFixed(2)
           ) ?? [],
         fill: false,
         borderDash: [4, 4],
@@ -111,7 +111,7 @@ export const MaddalenaBuildingPage = () => {
     ],
   };
 
-  const apartmentOptions = BUILDING["maddalena_house"].map((apartment) => ({
+  const apartmentOptions = BUILDING["maddalenaHouse"].map((apartment) => ({
     value: apartment,
     label: apartment,
   }));

@@ -4,7 +4,7 @@ export interface TSV {
 }
 export interface SPMV {
   time: string;
-  forecasted_sPMV: number;
+  forecastedSPmv: number;
 }
 export interface Consumption {
   date: string;
@@ -22,14 +22,14 @@ export interface Recommendation {
 
 export interface FlexibilityHeating {
   time: string;
-  energy_average: number;
+  energyAverage: number;
   baseline: number;
-  flexibility_above: number;
-  flexibility_below: number;
+  flexibilityAbove: number;
+  flexibilityBelow: number;
 }
 export interface Energy {
-  energy_a: EnergyEntry[];
-  power_a: EnergyEntry[];
+  energyA: EnergyEntry[];
+  powerA: EnergyEntry[];
 }
 export interface EnergyEntry {
   time: string;

@@ -1,7 +1,7 @@
 import { API_URL, API_URL_PROD } from "../utils/Constant";
 import { normalizeRecommendationData } from "../utils/normalizeRecommendationData";
 import api from "./axiosConfig";
-import { TSV, SPMV } from "./models";
+import { TSV, SPMV, Recommendation } from "./models";
 
 export const getTsv = async (): Promise<TSV[]> => {
   try {
@@ -11,8 +11,8 @@ export const getTsv = async (): Promise<TSV[]> => {
   } catch (error: any) {
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
     const customError = new Error(errorMessage) as any;
-    customError.status = error.response?.status
-    
+    customError.status = error.response?.status;
+
     throw customError;
   }
 };
@@ -29,11 +29,10 @@ export const getSPMV = async (
     const data: SPMV[] = response.data;
     return data;
   } catch (error: any) {
-   
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
     const customError = new Error(errorMessage) as any;
-    customError.status = error.response?.status
-    
+    customError.status = error.response?.status;
+
     throw customError;
   }
 };
@@ -41,25 +40,28 @@ export const getSPMV = async (
 export const getRecommendation = async (
   building: string,
   apartment: string
-): Promise<any> => {
+): Promise<Recommendation> => {
   try {
-    const response = await api.get(`${API_URL_PROD}/optimization/${building}/${apartment}`);
+    const response = await api.get(
+      `${API_URL_PROD}/optimization/${building}/${apartment}`
+    );
 
-    const data= response.data;
+    const data = response.data;
 
     if (!data) {
-      throw new Error(`Could not fetch recommendation for ${building} - ${apartment}`);
+      throw new Error(
+        `Could not fetch recommendation for ${building} - ${apartment}`
+      );
     }
     //change model format
     const cleanedData =
       data?.map((item: any) => normalizeRecommendationData(item)) ?? [];
-
     return cleanedData;
   } catch (error: any) {
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
     const customError = new Error(errorMessage) as any;
-    customError.status = error.response?.status
-    
+    customError.status = error.response?.status;
+
     throw customError;
   }
 };

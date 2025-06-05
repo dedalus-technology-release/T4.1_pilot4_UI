@@ -13,7 +13,6 @@ export const login = async (credentials: IFormInput): Promise<Token> => {
 
     return response.data;
   } catch (error: any) {
-    console.log(error);
     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
 
     throw new Error(errorMessage);

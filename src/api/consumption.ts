@@ -7,7 +7,6 @@ export const getConsumption =  async (): Promise<Consumption[]> =>{
   try {
     const response = await api.get(`${API_URL}/consumption`);
     const data: Consumption[] = response.data
-    console.log(response)
     return data
  } catch (error: any) {
    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
