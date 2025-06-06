@@ -29,7 +29,8 @@ export const getSPMV = async (
     const data: SPMV[] = response.data;
     return data;
   } catch (error: any) {
-    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    // const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    const errorMessage =  `No sPMV data is available for apartment ${apartment} in ${building}`
     const customError = new Error(errorMessage) as any;
     customError.status = error.response?.status;
 
@@ -50,7 +51,7 @@ export const getRecommendation = async (
 
     if (!data) {
       throw new Error(
-        `Could not fetch recommendation for ${building} - ${apartment}`
+        `No recommendation is available for apartment ${apartment} in ${building}`
       );
     }
     //change model format
@@ -58,7 +59,9 @@ export const getRecommendation = async (
       data?.map((item: any) => normalizeRecommendationData(item)) ?? [];
     return cleanedData;
   } catch (error: any) {
-    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    const errorMessage =
+      // error.response?.data?.detail ||
+      `No recommendation is available for apartment ${apartment} in ${building}`;
     const customError = new Error(errorMessage) as any;
     customError.status = error.response?.status;
 

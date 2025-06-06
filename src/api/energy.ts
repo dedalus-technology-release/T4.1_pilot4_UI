@@ -15,12 +15,13 @@ export const getFlexibilityHeating = async (
 
     if (!data) {
       throw new Error(
-        `Could not fetch flexility for ${building} - ${apartment}`
+        `No flexibility heating data is available for apartment ${apartment} in ${building}`
       );
     }
     return data;
   } catch (error: any) {
-    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    // const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    const errorMessage = `No flexibility heating data is available for apartment ${apartment} in ${building}`;
     const customError = new Error(errorMessage) as any;
     customError.status = error.response?.status;
 
@@ -41,12 +42,13 @@ export const getTodaysEnergy = async (
 
     if (!data) {
       throw new Error(
-        `Could not fetch energy for ${building} - ${apartment}`
+        `No energy data is available for apartment ${apartment} in ${building}`
       );
     }
     return data;
   } catch (error: any) {
-    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    // const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+    const errorMessage = `No energy data is available for apartment ${apartment} in ${building}`;
     const customError = new Error(errorMessage) as any;
     customError.status = error.response?.status;
 

@@ -6,10 +6,6 @@ export interface SPMV {
   time: string;
   forecastedSPmv: number;
 }
-export interface Consumption {
-  date: string;
-  consumption: number;
-}
 
 export interface Recommendation {
   solution: string;
