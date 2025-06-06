@@ -1,4 +1,5 @@
 import Select from "react-select";
+import { Form } from "react-bootstrap";
 import { Option } from "../api/models";
 
 interface CustomSelectProps {
@@ -15,11 +16,15 @@ export const CustomSelect = ({
   placeholderText,
 }: CustomSelectProps) => {
   return (
-    <Select
-      options={options}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholderText}
-    />
+    <Form.Group>
+      <Form.Label className="fw-semibold m-0">Select Apartment</Form.Label>
+      <Select
+        options={options}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholderText}
+        classNamePrefix="react-select"
+      />
+    </Form.Group>
   );
 };
