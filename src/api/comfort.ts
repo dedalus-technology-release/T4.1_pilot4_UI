@@ -1,21 +1,7 @@
-import { API_URL, API_URL_PROD } from "../utils/Constant";
+import { API_URL_PROD } from "../utils/Constant";
 import { normalizeRecommendationData } from "../utils/normalizeRecommendationData";
 import api from "./axiosConfig";
-import { TSV, SPMV, Recommendation } from "./models";
-
-export const getTsv = async (): Promise<TSV[]> => {
-  try {
-    const response = await api.get(`${API_URL}/tsv`);
-    const data: TSV[] = response.data;
-    return data;
-  } catch (error: any) {
-    const errorMessage = error.response?.data?.detail || "Failed to fetch data";
-    const customError = new Error(errorMessage) as any;
-    customError.status = error.response?.status;
-
-    throw customError;
-  }
-};
+import { SPMV, Recommendation } from "./models";
 
 export const getSPMV = async (
   building: string,
@@ -68,3 +54,17 @@ export const getRecommendation = async (
     throw customError;
   }
 };
+
+// export const getTsv = async (): Promise<TSV[]> => {
+//   try {
+//     const response = await api.get(`${API_URL_PROD}/tsv`);
+//     const data: TSV[] = response.data;
+//     return data;
+//   } catch (error: any) {
+//     const errorMessage = error.response?.data?.detail || "Failed to fetch data";
+//     const customError = new Error(errorMessage) as any;
+//     customError.status = error.response?.status;
+
+//     throw customError;
+//   }
+// };

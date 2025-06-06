@@ -1,7 +1,6 @@
 import {
   Navigate,
   Route,
-  BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
