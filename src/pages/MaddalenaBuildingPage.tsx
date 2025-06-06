@@ -18,6 +18,7 @@ import {
 import { BUILDING, MADDALENA_HOUSE } from "../utils/buildings";
 
 import { FlexibilityHeating, Option } from "../api/models";
+import { formatDate } from "../utils/dateUtils";
 
 export const MaddalenaBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState<string | null>(
@@ -56,7 +57,7 @@ export const MaddalenaBuildingPage = () => {
     loadingSpmv || loadingRecommendation || loadingFlexHeating || loadingEnergy;
 
   const spmvChartData = spmvData && {
-    labels: spmvData?.map((record) => record.time),
+    labels: spmvData?.map((record) => formatDate(record.time)),
     datasets: [
       {
         label: `SPMV`,
@@ -68,7 +69,7 @@ export const MaddalenaBuildingPage = () => {
     ],
   };
   const flexHeatingChartData = flexHeatingData && {
-    labels: flexHeatingData?.map((record) => record.time),
+    labels: flexHeatingData?.map((record) => formatDate(record.time)),
     datasets: [
       {
         label: `Baseline`,

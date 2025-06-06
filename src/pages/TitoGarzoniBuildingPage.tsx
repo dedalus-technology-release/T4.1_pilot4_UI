@@ -18,6 +18,7 @@ import {
   useFlexiblityHeatingForecast,
   useTodaysEnergy,
 } from "../hooks/useEnergy";
+import { formatDate } from "../utils/dateUtils";
 
 export const TitoGarzoniBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState<string | null>(
@@ -57,7 +58,7 @@ export const TitoGarzoniBuildingPage = () => {
 
   const spmvChartData = spmvData
     ? {
-        labels: spmvData?.map((record) => record.time),
+        labels: spmvData?.map((record) => formatDate(record.time)),
         datasets: [
           {
             label: `SPMV`,
@@ -71,7 +72,7 @@ export const TitoGarzoniBuildingPage = () => {
     : undefined;
 
   const flexHeatingChartData = flexHeatingData && {
-    labels: flexHeatingData?.map((record) => record.time),
+    labels: flexHeatingData?.map((record) => formatDate(record.time)),
     datasets: [
       {
         label: `Baseline`,
