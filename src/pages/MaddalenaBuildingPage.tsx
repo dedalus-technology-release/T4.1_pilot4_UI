@@ -56,17 +56,31 @@ export const MaddalenaBuildingPage = () => {
     loadingSpmv || loadingRecommendation || loadingFlexHeating || loadingEnergy;
 
   const spmvChartData = spmvData && {
-    labels: spmvData?.map((record) => record.time),
-    datasets: [
-      {
-        label: `SPMV`,
-        data: spmvData?.map((record) => record.forecastedSPmv.toFixed(2)),
-        fill: true,
-        borderColor: "rgba(0, 72, 230, 1)",
-        backgroundColor: "rgba(0, 72, 230, 0.5)",
-      },
-    ],
-  };
+  labels: spmvData.map((record) => record.time),
+  datasets: [
+    {
+      label: "sPMV",
+      data: spmvData.map((record) =>
+        record.forecastedSPmv.toFixed(2)
+      ),
+      fill: true,
+      borderColor: "rgba(0, 72, 230, 1)",
+      backgroundColor: "rgba(0, 72, 230, 0.3)",
+      yAxisID: "y", // asse principale per sPMV
+    },
+    {
+      label: "Temperatura (°C)",
+      data: spmvData.map((record) =>
+        record.forecastedTemp.toFixed(1)
+      ),
+      fill: false,
+      borderColor: "rgba(255, 99, 132, 1)", // rosso per le temperature
+      backgroundColor: "rgba(255, 99, 132, 0.3)",
+      borderDash: [4, 4], // linea tratteggiata per differenziarla visivamente
+      yAxisID: "y1", // secondo asse per la temperatura
+    },
+  ],
+};
   const flexHeatingChartData = flexHeatingData && {
     labels: flexHeatingData?.map((record) => record.time),
     datasets: [
@@ -88,25 +102,55 @@ export const MaddalenaBuildingPage = () => {
         backgroundColor: "rgba(255, 190, 0, 0.5)",
         borderColor: "rgba(255, 190, 0, 1)",
       },
+      //{
+      //  label: `Flexibility Above`,
+      //  data:
+      //    flexHeatingData?.map((record) =>
+      //      Number(record?.flexibilityAbove).toFixed(2)
+      //    ) ?? [],
+      //  fill: false,
+      //  borderDash: [2, 6],
+      //  borderColor: "rgba(40, 167, 69, 0.7)",
+      //},
+      //{
+      //  label: `Flexibility Below `,
+      //  data:
+      //    flexHeatingData?.map((record) =>
+      //      Number(record?.flexibilityBelow).toFixed(2)
+      //    ) ?? [],
+      //  fill: false,
+      //  borderDash: [4, 4],
+      //  borderColor: "rgba(140, 215, 144, 0.7)",
+      //},
       {
-        label: `Flexibility Above`,
+        label: `S1 Consumption`,
         data:
           flexHeatingData?.map((record) =>
-            Number(record?.flexibilityAbove).toFixed(2)
-          ) ?? [],
-        fill: false,
-        borderDash: [2, 6],
-        borderColor: "rgba(40, 167, 69, 0.7)",
-      },
-      {
-        label: `Flexibility Below `,
-        data:
-          flexHeatingData?.map((record) =>
-            Number(record?.flexibilityBelow).toFixed(2)
+            Number(record?.expected_energy_consumption_S1).toFixed(2)
           ) ?? [],
         fill: false,
         borderDash: [4, 4],
         borderColor: "rgba(140, 215, 144, 0.7)",
+      },
+      {
+        label: `S2 Consumption`,
+        data:
+          flexHeatingData?.map((record) =>
+            Number(record?.expected_energy_consumption_S2).toFixed(2)
+          ) ?? [],
+        fill: false,
+        borderDash: [4, 4],
+        borderColor: "rgba(182, 140, 215, 0.7)",
+      },
+      {
+        label: `S3 Consumption`,
+        data:
+          flexHeatingData?.map((record) =>
+            Number(record?.expected_energy_consumption_S3).toFixed(2)
+          ) ?? [],
+        fill: false,
+        borderDash: [4, 4],
+        borderColor: "rgba(215, 140, 212, 0.7)",
       },
     ],
   };

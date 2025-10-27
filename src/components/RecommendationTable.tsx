@@ -1,6 +1,7 @@
 import Table from "react-bootstrap/Table";
 import { WiThermometer, WiHumidity } from "react-icons/wi";
 import { MdEnergySavingsLeaf } from "react-icons/md";
+import { IoMdHappy } from "react-icons/io";
 
 import { Recommendation } from "../api/models";
 
@@ -22,17 +23,22 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
       settings: [
         {
           setting: "Internal Temperature",
-          value: `${recomendation.avgTempC} °C`,
+          value: `from ${recomendation.t_r_min}°C to ${recomendation.t_r_max}°C`,
           icon: <WiThermometer className="text-danger fs-3" />,
         },
         {
           setting: "Relative Humidity",
-          value: `${recomendation.avgHumidity} %`,
+          value: `from ${recomendation.rh_r_min}% to ${recomendation.rh_r_max}%`,
           icon: <WiHumidity className="text-primary fs-3" />,
         },
         {
+          setting: "Expected Comfort",
+          value: `from ${recomendation.comfortMin} to ${recomendation.comfortMax}`,
+          icon: <IoMdHappy className="text-success fs-3" />
+        },
+        {
           setting: "Energy Saving",
-          value: `${recomendation.energySavings} %`,
+          value: `from ${recomendation.energySavingWhMin}% to ${recomendation.energySavingWhMax}%`,
           icon: <MdEnergySavingsLeaf className="text-warning fs-4" />,
         },
       ],
