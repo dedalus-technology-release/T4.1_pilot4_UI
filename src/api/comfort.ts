@@ -8,9 +8,12 @@ export const getSPMV = async (
   apartment: string
 ): Promise<SPMV[]> => {
   try {
-    const response = await api.get(
-      `${API_URL_PROD}/sPMV/${building}/${apartment}`
-    );
+    let spmvURL = `${API_URL_PROD}/sPMV/${building}/${apartment}`;
+    if (apartment === "summary") {
+      spmvURL = `${API_URL_PROD}/sPMV-summary/${building}`;
+    } 
+
+    const response = await api.get(spmvURL)
 
     const data: SPMV[] = response.data;
     return data;
@@ -27,11 +30,13 @@ export const getSPMV = async (
 export const getRecommendation = async (
   building: string,
   apartment: string
-): Promise<Recommendation> => {
+): Promise<Recommendation[]> => {
   try {
-    const response = await api.get(
-      `${API_URL_PROD}/optimization/${building}/${apartment}`
-    );
+    let optimizationURL = `${API_URL_PROD}/optimization/${building}/${apartment}`;
+    if (apartment === "summary") {
+      optimizationURL = `${API_URL_PROD}/optimization-summary/${building}`;
+    }
+    const response = await api.get(optimizationURL);
 
     const data = response.data;
 
@@ -40,17 +45,16 @@ export const getRecommendation = async (
         `No recommendation is available for apartment ${apartment} in ${building}`
       );
     }
-    //change model format
+
+    // Normalizzi i dati
     const cleanedData =
       data?.map((item: any) => normalizeRecommendationData(item)) ?? [];
+
     return cleanedData;
   } catch (error: any) {
-    const errorMessage =
-      // error.response?.data?.detail ||
-      `No recommendation is available for apartment ${apartment} in ${building}`;
+    const errorMessage = `No recommendation is available for apartment ${apartment} in ${building}`;
     const customError = new Error(errorMessage) as any;
     customError.status = error.response?.status;
-
     throw customError;
   }
 };

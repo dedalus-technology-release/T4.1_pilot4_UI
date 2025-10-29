@@ -16,30 +16,42 @@ const solutionCondition: Record<string, string> = {
 };
 
 const RecommendationTable = ({ data }: RecommendationTableProps) => {
+
+  console.log("DATA PASSED TO TABLE:", data);
+
   const dataWithCondition = data?.map((recomendation: Recommendation) => {
     return {
       // ...recomendation,
+      solution: recomendation?.solution,
       condition: solutionCondition?.[recomendation?.solution],
       settings: [
         {
           setting: "Internal Temperature",
-          value: `from ${recomendation.t_r_min}°C to ${recomendation.t_r_max}°C`,
+          value: recomendation?.t_r_min !== recomendation?.t_r_max
+            ? `${recomendation?.t_r_min}°C - ${recomendation?.t_r_max}°C`
+            : `${recomendation?.t_r_min}°C`,
           icon: <WiThermometer className="text-danger fs-3" />,
         },
         {
           setting: "Relative Humidity",
-          value: `from ${recomendation.rh_r_min}% to ${recomendation.rh_r_max}%`,
+          value: recomendation?.rh_r_min !== recomendation?.rh_r_max
+            ? `${recomendation?.rh_r_min}% - ${recomendation?.rh_r_max}%`
+            : `${recomendation?.rh_r_min}%`,
           icon: <WiHumidity className="text-primary fs-3" />,
         },
         {
           setting: "Expected Comfort",
-          value: `from ${recomendation.comfortMin} to ${recomendation.comfortMax}`,
+          value: recomendation?.comfortMin !== recomendation?.comfortMax
+            ? `${recomendation?.comfortMin} - ${recomendation?.comfortMax}`
+            : `${recomendation?.comfortMin}`,
           icon: <IoMdHappy className="text-success fs-3" />
         },
         {
           setting: "Energy Saving",
-          value: `from ${recomendation.energySavingWhMin}% to ${recomendation.energySavingWhMax}%`,
-          icon: <MdEnergySavingsLeaf className="text-warning fs-4" />,
+          value: recomendation?.energySavingWhMin !== recomendation?.energySavingWhMax
+            ? `${recomendation?.energySavingWhMin}% - ${recomendation?.energySavingWhMax}%`
+            : `${recomendation?.energySavingWhMin}%`,
+          icon: <MdEnergySavingsLeaf className="text-warning fs-3" />,
         },
       ],
     };
@@ -60,8 +72,8 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
             recommendation.settings.map((setting, settingIndex) => (
               <tr key={settingIndex}>
                 {settingIndex == 0 && (
-                  <td rowSpan={3} style={{ maxWidth: "150px" }}>
-                    <strong>{recommendation.condition}</strong>
+                  <td rowSpan={4} style={{ maxWidth: "150px" }}>
+                    <strong>{recommendation.condition} ({recommendation.solution})</strong>
                   </td>
                 )}
                 <td>

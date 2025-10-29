@@ -8,6 +8,11 @@ export interface SPMV {
   forecastedTemp: number;
 }
 
+export interface Co2 {
+  time: string;
+  value: number;
+}
+
 export interface Recommendation {
   solution: string;
   comfortMin: number;
@@ -28,9 +33,9 @@ export interface FlexibilityHeating {
   baseline: number;
   flexibilityAbove: number;
   flexibilityBelow: number;
-  expected_energy_consumption_S1: number;
-  expected_energy_consumption_S2: number;
-  expected_energy_consumption_S3: number;
+  expectedEnergyConsumptionS1: number;
+  expectedEnergyConsumptionS2: number;
+  expectedEnergyConsumptionS3: number;
 }
 export interface Energy {
   energyA: EnergyEntry[];

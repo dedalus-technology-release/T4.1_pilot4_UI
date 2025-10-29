@@ -9,6 +9,7 @@ import DataDisplayCard from "../components/cards/DataDisplayCard";
 import { CustomSelect } from "../components/CustomSelect";
 import CircularProgress from "../components/CircularProgress";
 
+import { useCo2 } from "../hooks/useCo2";
 import { useRecommendation, useSPMV } from "../hooks/useComfort";
 import {
   useFlexiblityHeatingForecast,
@@ -20,10 +21,18 @@ import { BUILDING, MADDALENA_HOUSE } from "../utils/buildings";
 import { FlexibilityHeating, Option } from "../api/models";
 import { formatDate } from "../utils/dateUtils";
 
+import LineChartCo2 from "../components/charts/LineChartCo2";
+
 export const MaddalenaBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState<string | null>(
     null
   );
+
+  const {
+    data: co2Data,
+    isPending: co2Pending,
+    isFetching: co2Fetching,
+  } = useCo2(MADDALENA_HOUSE, selectedApartment || "");
 
   const {
     data: spmvData,
@@ -48,40 +57,56 @@ export const MaddalenaBuildingPage = () => {
     isFetching: recommendationFetching,
   } = useRecommendation(MADDALENA_HOUSE, selectedApartment || "");
 
+  const loadingCo2 = co2Pending || co2Fetching;
   const loadingSpmv = spmvPending || spmvFetching;
   const loadingRecommendation = recommendationPending || recommendationFetching;
   const loadingFlexHeating = flexHeatingPending || flexHeatingFetching;
   const loadingEnergy = energyPending || energyFetching;
 
   const isLoading =
-    loadingSpmv || loadingRecommendation || loadingFlexHeating || loadingEnergy;
+    loadingCo2 || loadingSpmv || loadingRecommendation || loadingFlexHeating || loadingEnergy;
 
+  const co2ChartData = co2Data && {
+    labels: co2Data.map((record) => record.time),
+    datasets: [
+      {
+        label: "Co2 (ppm)",
+        data: co2Data.map((record) =>
+          record?.value?.toFixed(2)
+        ),
+        fill: true,
+        borderColor: "rgba(111, 230, 0, 1)",
+        backgroundColor: "rgba(0, 230, 77, 0.3)",
+        yAxisID: "y", // asse principale per CO2
+      }
+    ],
+  };
   const spmvChartData = spmvData && {
-  labels: spmvData.map((record) => record.time),
-  datasets: [
-    {
-      label: "sPMV",
-      data: spmvData.map((record) =>
-        record.forecastedSPmv.toFixed(2)
-      ),
-      fill: true,
-      borderColor: "rgba(0, 72, 230, 1)",
-      backgroundColor: "rgba(0, 72, 230, 0.3)",
-      yAxisID: "y", // asse principale per sPMV
-    },
-    {
-      label: "Temperatura (°C)",
-      data: spmvData.map((record) =>
-        record.forecastedTemp.toFixed(1)
-      ),
-      fill: false,
-      borderColor: "rgba(255, 99, 132, 1)", // rosso per le temperature
-      backgroundColor: "rgba(255, 99, 132, 0.3)",
-      borderDash: [4, 4], // linea tratteggiata per differenziarla visivamente
-      yAxisID: "y1", // secondo asse per la temperatura
-    },
-  ],
-};
+    labels: spmvData.map((record) => record.time),
+    datasets: [
+      {
+        label: "sPMV",
+        data: spmvData.map((record) =>
+          record.forecastedSPmv.toFixed(2)
+        ),
+        fill: true,
+        borderColor: "rgba(0, 72, 230, 1)",
+        backgroundColor: "rgba(0, 72, 230, 0.3)",
+        yAxisID: "y", // asse principale per sPMV
+      },
+      {
+        label: "Temperature (°C)",
+        data: spmvData.map((record) =>
+          record.forecastedTemp.toFixed(1)
+        ),
+        fill: false,
+        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: "rgba(255, 99, 132, 0.3)",
+        borderDash: [4, 4],
+        yAxisID: "y1",
+      },
+    ],
+  };
   const flexHeatingChartData = flexHeatingData && {
     labels: flexHeatingData?.map((record) => formatDate(record.time)),
     datasets: [
@@ -125,33 +150,36 @@ export const MaddalenaBuildingPage = () => {
       //},
       {
         label: `S1 Consumption`,
-        data:
-          flexHeatingData?.map((record) =>
-            Number(record?.expected_energy_consumption_S1).toFixed(2)
-          ) ?? [],
+        data: flexHeatingData?.map((record) =>
+          record?.expectedEnergyConsumptionS1 != null
+            ? Number(record.expectedEnergyConsumptionS1).toFixed(2)
+            : null
+        ) ?? [],
         fill: false,
         borderDash: [4, 4],
         borderColor: "rgba(140, 215, 144, 0.7)",
       },
       {
         label: `S2 Consumption`,
-        data:
-          flexHeatingData?.map((record) =>
-            Number(record?.expected_energy_consumption_S2).toFixed(2)
-          ) ?? [],
+        data: flexHeatingData?.map((record) =>
+          record?.expectedEnergyConsumptionS2 != null
+            ? Number(record.expectedEnergyConsumptionS2).toFixed(2)
+            : null
+        ) ?? [],
         fill: false,
         borderDash: [4, 4],
         borderColor: "rgba(182, 140, 215, 0.7)",
       },
       {
         label: `S3 Consumption`,
-        data:
-          flexHeatingData?.map((record) =>
-            Number(record?.expected_energy_consumption_S3).toFixed(2)
-          ) ?? [],
+        data: flexHeatingData?.map((record) =>
+          record?.expectedEnergyConsumptionS3 != null
+            ? Number(record.expectedEnergyConsumptionS3).toFixed(2)
+            : null
+        ) ?? [],
         fill: false,
         borderDash: [4, 4],
-        borderColor: "rgba(215, 140, 212, 0.7)",
+        borderColor: "rgba(255, 59, 59, 0.7)",
       },
     ],
   };
@@ -215,6 +243,20 @@ export const MaddalenaBuildingPage = () => {
                 maxLabelValue={3}
               />
             </DataDisplayCard>
+            <DataDisplayCard
+              title="Air Quality"
+              classCard="mb-3"
+              classCardBody="p-2"
+            >
+              <LineChartCo2
+                inputChartData={co2ChartData}
+                dataLength={1}
+                //minLabelValue={-3}
+                //maxLabelValue={3}
+                minRecommended={400}
+                maxRecommended={1000}
+              />
+            </DataDisplayCard>
           </Col>
 
           <Col lg={5}>
@@ -223,7 +265,7 @@ export const MaddalenaBuildingPage = () => {
               classCard="mb-3"
               classCardBody="p-2"
             >
-              <RecommendationTable data={recommendationData} />
+              <RecommendationTable data={recommendationData ?? []} />
               {/* <p>test</p> */}
             </DataDisplayCard>
           </Col>

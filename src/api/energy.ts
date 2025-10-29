@@ -7,9 +7,11 @@ export const getFlexibilityHeating = async (
   apartment: string
 ): Promise<FlexibilityHeating[]> => {
   try {
-    const response = await api.get(
-      `${API_URL_PROD}/flexibility_heating/${building}/${apartment}`
-    );
+    let flexibilityHeatingURL = `${API_URL_PROD}/flexibility_heating/${building}/${apartment}`;
+    if (apartment === "summary") {
+      flexibilityHeatingURL = `${API_URL_PROD}/flexibility_heating-summary/${building}`;
+    } 
+    const response = await api.get(flexibilityHeatingURL);
 
     const data = response.data;
 
@@ -18,6 +20,9 @@ export const getFlexibilityHeating = async (
         `No flexibility heating data is available for apartment ${apartment} in ${building}`
       );
     }
+
+    console.log("Flexibility Heating Data:", data);
+
     return data;
   } catch (error: any) {
     // const errorMessage = error.response?.data?.detail || "Failed to fetch data";
@@ -34,9 +39,11 @@ export const getTodaysEnergy = async (
   apartment: string
 ): Promise<Energy> => {
   try {
-    const response = await api.get(
-      `${API_URL_PROD}/energy/${building}/${apartment}`
-    );
+    let energyURL = `${API_URL_PROD}/energy/${building}/${apartment}`;
+    if (apartment === "summary") {
+      energyURL = `${API_URL_PROD}/energy-summary/${building}`;
+    } 
+    const response = await api.get(energyURL);
 
     const data = response.data;
 

@@ -10,7 +10,7 @@ interface LineChartProps {
         labels?: string[];
         datasets: {
           label?: string;
-          data: (string | number)[];
+          data: (string | number | null)[];
           fill?: boolean;
           backgroundColor?: string;
           borderColor?: string;
@@ -69,6 +69,10 @@ const LineChart = memo(
                 : `${value.toFixed(2)}`;
             },
           },
+        },
+        y1: {
+          display: true,
+          position: "right" as const,
         },
       },
     };

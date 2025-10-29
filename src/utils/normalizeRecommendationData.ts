@@ -1,15 +1,16 @@
 export const normalizeRecommendationData = (raw: any) => {
+  console.log("NORMALIZING ITEM:", raw);
   return {
     solution: raw["solution"],
-    comfortMin: raw["expected_comfort_min"],
-    comfortMax: raw["expected_comfort_max"],
-    energyConsumptionMin: raw["expected_energy_consumption_min"],
-    energyConsumptionMax: raw["expected_energy_consumption_max"],
-    energySavingWhMin: raw["energy_saving_Wh_min"],
-    energySavingWhMax: raw["energy_saving_Wh_max"],
-    t_r_min: raw["t_r_min"],
-    t_r_max: raw["t_r_max"],
-    rh_r_min: raw["rh_r_min"],
-    rh_r_max: raw["rh_r_max"]
+    comfortMin: raw["expectedComfortMin"],
+    comfortMax: raw["expectedComfortMax"],
+    energyConsumptionMin: raw["expectedEnergyConsumptionMin"],
+    energyConsumptionMax: raw["expectedEnergyConsumptionMax"],
+    energySavingWhMin: raw["energySavingWhMin"],
+    energySavingWhMax: raw["energySavingWhMax"],
+    t_r_min: raw["tRMin"],
+    t_r_max: raw["tRMax"],
+    rh_r_min: raw["rhRMin"],
+    rh_r_max: raw["rhRMax"]
   };
 };
