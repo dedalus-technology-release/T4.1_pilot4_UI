@@ -40,6 +40,7 @@ interface LineChartProps {
   unit?: string;
   minLabelValue?: number;
   maxLabelValue?: number;
+  baselineValue?: number;
   minRecommended?: number;
   maxRecommended?: number;
 }
@@ -51,8 +52,9 @@ const LineChartCo2 = memo(
     unit,
     minLabelValue,
     maxLabelValue,
+    baselineValue= 550,
     minRecommended = 800,
-    maxRecommended = 1000,
+    maxRecommended = 1350,
   }: LineChartProps) => {
     const placeholderData = {
       labels: ["No Data"],
@@ -78,6 +80,20 @@ const LineChartCo2 = memo(
         legend: { position: "top" as const },
         annotation: {
           annotations: {
+            co2MBaseline: {
+              type: "line" as const,
+              yMin: baselineValue,
+              yMax: baselineValue,
+              borderColor: "rgba(0, 116, 69, 0.8)",
+              borderWidth: 2,
+              borderDash: [6, 4],
+              label: {
+                content: `Category 1 (${baselineValue} ppm)`,
+                position: "start" as const,
+                backgroundColor: "rgba(255, 193, 7, 0.7)",
+                color: "#000",
+              },
+            },
             co2Min: {
               type: "line" as const,
               yMin: minRecommended,
@@ -86,7 +102,7 @@ const LineChartCo2 = memo(
               borderWidth: 2,
               borderDash: [6, 4],
               label: {
-                content: `Min Recommended (${minRecommended} ppm)`,
+                content: `Category 2 (${minRecommended} ppm)`,
                 position: "start" as const,
                 backgroundColor: "rgba(255, 193, 7, 0.7)",
                 color: "#000",
@@ -100,7 +116,7 @@ const LineChartCo2 = memo(
               borderWidth: 2,
               borderDash: [6, 4],
               label: {
-                content: `Max Recommended (${maxRecommended} ppm)`,
+                content: `Category 3 (${maxRecommended} ppm)`,
                 position: "start" as const,
                 backgroundColor: "rgba(255, 99, 132, 0.7)",
                 color: "#fff",

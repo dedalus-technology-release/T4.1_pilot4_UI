@@ -18,3 +18,15 @@
 .striped-row {
   background-color: #580d0d !important /* light gray */
 }
+
+.smile-success .smile{
+  color: $success !important;
+}
+
+.smile-warning .smile{
+  color: $secondary !important;
+}
+
+.smile-danger .smile{
+  color: $danger !important;
+}

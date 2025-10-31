@@ -95,7 +95,7 @@ export const TitoGarzoniBuildingPage = () => {
       yAxisID: "y", // asse principale per sPMV
     },
     {
-      label: "Temperature (°C)",
+      label: "Outdoor Temperature (°C)",
       data: spmvData.map((record) =>
         record.forecastedTemp.toFixed(1)
       ),
@@ -105,6 +105,17 @@ export const TitoGarzoniBuildingPage = () => {
       borderDash: [4, 4], // linea tratteggiata per differenziarla visivamente
       yAxisID: "y1", // secondo asse per la temperatura
     },
+    {
+        label: "Indoor Temperature (°C)",
+        data: spmvData.map((record) =>
+          record.internalTemp?.toFixed(1)
+        ),
+        fill: false,
+        borderColor: "rgba(99, 255, 169, 1)",
+        backgroundColor: "rgba(5, 154, 47, 0.3)",
+        borderDash: [4, 4],
+        yAxisID: "y1",
+      },
   ],
 };
 
@@ -256,9 +267,9 @@ export const TitoGarzoniBuildingPage = () => {
                 inputChartData={co2ChartData}
                 dataLength={1}
                 //minLabelValue={-3}
-                //maxLabelValue={3}
-                minRecommended={400}
-                maxRecommended={1000}
+                baselineValue={550}
+                minRecommended={800}
+                maxRecommended={1350}
               />
             </DataDisplayCard>
           </Col>

@@ -6,6 +6,7 @@ export interface SPMV {
   time: string;
   forecastedSPmv: number;
   forecastedTemp: number;
+  internalTemp: number;
 }
 
 export interface Co2 {

@@ -42,9 +42,9 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         {
           setting: "Expected Comfort",
           value: recomendation?.comfortMin !== recomendation?.comfortMax
-            ? `${recomendation?.comfortMin} - ${recomendation?.comfortMax}`
+            ? `${recomendation?.comfortMin}, ${recomendation?.comfortMax}`
             : `${recomendation?.comfortMin}`,
-          icon: <IoMdHappy className="text-success fs-3" />
+          icon: <IoMdHappy className="smile text-success fs-3" />
         },
         {
           setting: "Energy Saving",
@@ -70,7 +70,7 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         {dataWithCondition?.length > 0 ? (
           dataWithCondition?.map((recommendation) =>
             recommendation.settings.map((setting, settingIndex) => (
-              <tr key={settingIndex}>
+              <tr key={settingIndex} className={recommendation.solution === "S1" ? "smile-success" : recommendation.solution === "S2" ? "smile-danger" : "smile-warning"}>
                 {settingIndex == 0 && (
                   <td rowSpan={4} style={{ maxWidth: "150px" }}>
                     <strong>{recommendation.condition} ({recommendation.solution})</strong>
