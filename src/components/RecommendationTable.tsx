@@ -10,9 +10,9 @@ interface RecommendationTableProps {
 }
 
 const solutionCondition: Record<string, string> = {
-  S1: "Stay in comfort set",
-  S2: "Minimize energy consumption without taking into account comfort set",
-  S3: "Minimize energy consumption with an acceptable comfort set",
+  S1: "Stay in comfort",
+  S2: "Minimize energy consumption with an acceptable comfort",
+  S3: "Minimize energy consumption without taking into account comfort",
 };
 
 const RecommendationTable = ({ data }: RecommendationTableProps) => {
@@ -70,7 +70,7 @@ const RecommendationTable = ({ data }: RecommendationTableProps) => {
         {dataWithCondition?.length > 0 ? (
           dataWithCondition?.map((recommendation) =>
             recommendation.settings.map((setting, settingIndex) => (
-              <tr key={settingIndex} className={recommendation.solution === "S1" ? "smile-success" : recommendation.solution === "S2" ? "smile-danger" : "smile-warning"}>
+              <tr key={settingIndex} className={recommendation.solution === "S1" ? "smile-success" : recommendation.solution === "S2" ? "smile-warning" : "smile-danger"}>
                 {settingIndex == 0 && (
                   <td rowSpan={4} style={{ maxWidth: "150px" }}>
                     <strong>{recommendation.condition} ({recommendation.solution})</strong>
