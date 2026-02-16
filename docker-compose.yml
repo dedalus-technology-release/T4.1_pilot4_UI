@@ -11,3 +11,4 @@ services:
     environment:
       - VITE_API_URL_PROD=${VITE_API_URL_PROD}
       - VITE_APP_PORT=${VITE_APP_PORT}
+      - VITE_API_SERVICE_D=${VITE_API_SERVICE_D}
