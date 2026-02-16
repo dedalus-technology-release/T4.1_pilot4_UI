@@ -22,6 +22,7 @@ import {
 import { formatDate } from "../utils/dateUtils";
 
 import LineChartCo2 from "../components/charts/LineChartCo2";
+import ServiceDModule from "../components/ServiceDModule";
 
 export const TitoGarzoniBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState<string | null>(
@@ -282,6 +283,7 @@ export const TitoGarzoniBuildingPage = () => {
             >
               <RecommendationTable data={recommendationData ?? []} />
             </DataDisplayCard>
+            <ServiceDModule />
           </Col>
         </Row>
       </Container>

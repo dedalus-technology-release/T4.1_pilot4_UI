@@ -22,6 +22,7 @@ import { FlexibilityHeating, Option } from "../api/models";
 import { formatDate } from "../utils/dateUtils";
 
 import LineChartCo2 from "../components/charts/LineChartCo2";
+import ServiceDModule from "../components/ServiceDModule";
 
 export const MaddalenaBuildingPage = () => {
   const [selectedApartment, setSelectedApartment] = useState<string | null>(
@@ -94,7 +95,7 @@ export const MaddalenaBuildingPage = () => {
         backgroundColor: "rgba(0, 72, 230, 0.3)",
         yAxisID: "y", // asse principale per sPMV
       },
-      {
+    {
         label: "Outdoor Temperature (°C)",
         data: spmvData.map((record) =>
           record.forecastedTemp.toFixed(1)
@@ -280,6 +281,7 @@ export const MaddalenaBuildingPage = () => {
               <RecommendationTable data={recommendationData ?? []} />
               {/* <p>test</p> */}
             </DataDisplayCard>
+            <ServiceDModule />
           </Col>
         </Row>
       </Container>

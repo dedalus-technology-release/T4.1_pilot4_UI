@@ -60,3 +60,23 @@ export interface IFormInput {
   username: string;
   password: string;
 }
+
+export interface Dam {
+  time_period: string;
+  DAM: number;
+}
+
+export interface Green {
+  time_period: string;
+  tariff: number;
+}
+
+export interface DamJson {
+  timePeriod: string;
+  dam: number;
+}
+
+export interface GreenJson {
+  timePeriod: string;
+  tariff: number;
+}

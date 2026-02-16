@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import { TitoGarzoniBuildingPage } from "../pages/TitoGarzoniBuildingPage";
 import { MaddalenaBuildingPage } from "../pages/MaddalenaBuildingPage";
 import Login from "../pages/Login";
+import { ServiceDModule } from "../components/ServiceDModule";
 
 const AppRouter = () => {
   return (
@@ -26,6 +27,15 @@ const AppRouter = () => {
           element={
             <PrivateRoute>
               <MaddalenaBuildingPage />
+            </PrivateRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/service-d"
+          element={
+            <PrivateRoute>
+              <ServiceDModule />
             </PrivateRoute>
           }
         ></Route>
